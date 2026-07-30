@@ -2,1071 +2,585 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Imaad AI Classes | Premium AI Learning Platform</title>
-  <meta name="description" content="Premium AI, web, and data learning platform with smart enrollment and AI chatbot support." />
+  <title>Aetheria AI Academy</title>
+  <meta name="description" content="Aetheria AI Academy offers premium AI, web, data, creative, and business courses with magical guidance and expert support." />
+  <meta name="theme-color" content="#070b1f" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2338bdf8'/%3E%3Cstop offset='100%25' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='128' height='128' rx='32' fill='%23070b1f'/%3E%3Cpath d='M64 20l16 36 38 4-29 24 9 38-34-20-34 20 9-38-29-24 38-4z' fill='url(%23g)'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <style>
-    :root {
-      color-scheme: dark;
-      --bg: #050816;
-      --bg-2: #08111f;
-      --panel: rgba(15, 23, 42, 0.74);
-      --panel-2: rgba(17, 24, 39, 0.92);
-      --text: #f8fafc;
-      --muted: #cbd5e1;
-      --accent: #38bdf8;
-      --accent-2: #2563eb;
-      --accent-3: #8b5cf6;
-      --border: rgba(255, 255, 255, 0.12);
-      --shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    :root{
+      --bg:#060816;
+      --bg-2:#0b1328;
+      --panel:rgba(11,19,40,0.88);
+      --panel-2:rgba(18,28,56,0.95);
+      --text:#f7f9ff;
+      --muted:#c7d0e6;
+      --accent:#38bdf8;
+      --accent-2:#8b5cf6;
+      --accent-3:#22d3ee;
+      --border:rgba(255,255,255,0.12);
+      --shadow:0 20px 60px rgba(0,0,0,0.35);
+      --radius:24px;
+      --radius-sm:16px;
+      --transition:0.28s ease;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      color: var(--text);
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Inter',sans-serif;
+      color:var(--text);
       background:
-        radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.20), transparent 24%),
-        radial-gradient(circle at 80% 10%, rgba(37, 99, 235, 0.18), transparent 22%),
-        radial-gradient(circle at 50% 100%, rgba(139, 92, 246, 0.16), transparent 28%),
-        linear-gradient(135deg, #050816 0%, #08111f 40%, #121b2f 100%);
-      overflow-x: hidden;
-      min-height: 100vh;
-      position: relative;
+        radial-gradient(circle at top left, rgba(56,189,248,0.18), transparent 32%),
+        radial-gradient(circle at 90% 10%, rgba(139,92,246,0.22), transparent 26%),
+        radial-gradient(circle at bottom center, rgba(34,211,238,0.16), transparent 30%),
+        linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 45%, #111b35 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+      line-height:1.6;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 30px 30px;
-      opacity: 0.25;
-      pointer-events: none;
-      z-index: -3;
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    button,input,textarea,select{font:inherit}
+    button{cursor:pointer;border:none}
+    .skip-link{
+      position:absolute;left:-999px;top:auto;
+      background:#fff;color:#000;padding:8px 12px;border-radius:8px;z-index:9999;
     }
+    .skip-link:focus{left:12px;top:12px}
 
-    .bg-blobs { position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; }
-    .blob {
-      position: absolute;
-      border-radius: 999px;
-      filter: blur(70px);
-      opacity: 0.32;
-      animation: floatBlob 10s ease-in-out infinite;
-    }
-    .blob-1 { width: 220px; height: 220px; left: -40px; top: 10%; background: #38bdf8; animation-delay: 0s; }
-    .blob-2 { width: 280px; height: 280px; right: -60px; top: 8%; background: #2563eb; animation-delay: 1.5s; }
-    .blob-3 { width: 240px; height: 240px; left: 25%; bottom: -60px; background: #8b5cf6; animation-delay: 2.5s; }
-
-    @keyframes floatBlob {
-      0%, 100% { transform: translate3d(0,0,0) scale(1); }
-      50% { transform: translate3d(20px,-25px,0) scale(1.06); }
-    }
-
-    .page-fade {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .page-fade.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; display: block; }
-
-    .container {
-      width: min(1200px, 92%);
-      margin: 0 auto;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      border-bottom: 1px solid var(--border);
-      background: rgba(5, 8, 22, 0.8);
-      backdrop-filter: blur(14px);
-    }
-
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 0;
-    }
-
-    .logo {
-      font-size: 1.34rem;
-      font-weight: 800;
-      color: var(--accent);
-      letter-spacing: 0.8px;
-    }
-    .logo span {
-      display: block;
-      font-size: 0.72rem;
-      letter-spacing: 0.3em;
-      color: #fff;
-      margin-top: 3px;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      color: var(--muted);
-    }
-    .nav-links a:hover { color: #fff; }
-
-    .btn {
-      display: inline-block;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
-    }
-    .btn:hover {
-      transform: translateY(-3px);
-      filter: brightness(1.05);
-      box-shadow: 0 10px 24px rgba(56, 189, 248, 0.2);
-    }
-
-    .btn-primary {
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      color: white;
-      padding: 12px 16px;
-      border-radius: 999px;
-      font-weight: 700;
-      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.24);
-    }
-
-    .menu-btn {
-      display: none;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: #fff;
-      padding: 8px 10px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    .hero {
-      padding: 90px 0 70px;
-      position: relative;
-      overflow: hidden;
+    .aurora{
+      position:fixed;inset:0;pointer-events:none;z-index:-1;
       background:
-        linear-gradient(120deg, rgba(3,8,20,0.86), rgba(15,23,42,0.72)),
-        url("https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1800&q=80");
-      background-size: cover;
-      background-position: center;
+        radial-gradient(circle at 15% 20%, rgba(56,189,248,0.12), transparent 24%),
+        radial-gradient(circle at 85% 15%, rgba(139,92,246,0.16), transparent 24%),
+        radial-gradient(circle at 50% 100%, rgba(34,211,238,0.14), transparent 28%);
+      filter:blur(30px);
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+    @keyframes drift{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(20px,-18px,0)}}
+
+    .container{width:min(1210px,92%);margin:0 auto}
+    .section{padding:76px 0}
+    .section-title{
+      display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;
+      margin-bottom:22px;
+    }
+    .section-title h2{
+      font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;letter-spacing:0.2px
+    }
+    .section-title p{color:var(--muted);max-width:600px}
+
+    .glass{
+      background:var(--panel);
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      gap: 28px;
-      align-items: center;
+    .loader{
+      position:fixed;inset:0;display:grid;place-items:center;background:rgba(6,8,22,0.96);z-index:9999;transition:opacity .5s ease,visibility .5s ease;
+    }
+    .loader.hidden{opacity:0;visibility:hidden}
+    .loader-box{
+      width:min(420px,90%);padding:26px;border-radius:28px;border:1px solid var(--border);background:rgba(11,19,40,0.9);text-align:center;box-shadow:var(--shadow)
+    }
+    .loader-mark{
+      width:72px;height:72px;border-radius:22px;margin:0 auto 14px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      box-shadow:0 12px 28px rgba(56,189,248,0.28);
+      animation:pulse 1.3s ease-in-out infinite;
+    }
+    .loader-mark svg{width:40px;height:40px;fill:#fff}
+    .loader h3{font-size:1.1rem;margin-bottom:6px}
+    .loader p{color:var(--muted);font-size:0.95rem}
+
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+    header{
+      position:sticky;top:0;z-index:1000;
+      background:rgba(6,8,22,0.78);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      display:flex;justify-content:space-between;align-items:center;padding:14px 0;
+    }
+    .brand{
+      display:flex;align-items:center;gap:12px;min-width:0;
+    }
+    .brand-mark{
+      width:46px;height:46px;border-radius:16px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      box-shadow:0 10px 24px rgba(56,189,248,0.24);
+      flex-shrink:0;
+    }
+    .brand-mark svg{width:26px;height:26px;fill:#fff}
+    .brand-text{
+      line-height:1.05;white-space:nowrap;
+    }
+    .brand-title{
+      font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;letter-spacing:0.04em;
+    }
+    .brand-sub{
+      font-size:0.72rem;letter-spacing:0.26em;text-transform:uppercase;color:#cbd5e1;opacity:0.9;
     }
 
-    .eyebrow {
-      display: inline-block;
-      font-size: 0.88rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #dbeafe;
-      background: rgba(255,255,255,0.08);
-      padding: 8px 12px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      margin-bottom: 12px;
+    .nav-links{
+      display:flex;align-items:center;gap:14px;color:var(--muted);
+    }
+    .nav-links a{transition:color var(--transition),transform var(--transition)}
+    .nav-links a:hover{color:#fff;transform:translateY(-1px)}
+    .menu-btn{
+      display:none;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:#fff;padding:10px 12px;border-radius:12px;
     }
 
-    .hero h1 {
-      font-size: clamp(2.3rem, 4vw, 3.6rem);
-      line-height: 1.1;
-      margin-bottom: 12px;
-      letter-spacing: -0.6px;
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:12px 16px;border-radius:999px;font-weight:700;border:1px solid transparent;transition:transform var(--transition),box-shadow var(--transition),background var(--transition),border-color var(--transition);
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#fff;box-shadow:0 14px 28px rgba(56,189,248,0.24);
+    }
+    .btn-secondary{
+      background:rgba(255,255,255,0.06);border-color:var(--border);color:var(--text);
     }
 
-    .hero h1 .gradient-text {
-      background: linear-gradient(90deg, var(--accent), #8b5cf6 40%, #fff 90%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      color: transparent;
-      display: inline-block;
-      animation: shimmer 6s linear infinite alternate;
+    .hero{
+      padding:90px 0 40px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-grid{
+      display:grid;grid-template-columns:1.08fr .92fr;gap:24px;align-items:center;
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
+      background:rgba(255,255,255,0.06);border:1px solid var(--border);color:#e6f5ff;margin-bottom:16px;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.22em;
+    }
+    .hero h1{
+      font-family:'Playfair Display',serif;font-size:clamp(2.1rem,4vw,3.6rem);line-height:1.08;margin-bottom:12px;
+      letter-spacing:-0.02em;
+    }
+    .hero h1 .magic{
+      background:linear-gradient(90deg,var(--accent),#ffffff 35%, var(--accent-2));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;color:transparent;
+      display:inline-block;
+    }
+    .hero .lead{
+      color:var(--muted);font-size:1.04rem;max-width:700px;margin-bottom:18px;
+    }
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:22px}
+    .hero-stats{
+      display:flex;flex-wrap:wrap;gap:12px;
+    }
+    .hero-stat{
+      min-width:122px;padding:12px 14px;border-radius:16px;border:1px solid var(--border);background:rgba(255,255,255,0.06);
+    }
+    .hero-stat strong{display:block;color:#fff;font-size:1.06rem}
+    .hero-stat span{color:var(--muted);font-size:0.9rem}
+
+    .hero-card{
+      padding:28px;border-radius:28px;position:relative;overflow:hidden;
+      border:1px solid var(--border);background:linear-gradient(145deg,rgba(18,28,56,0.95),rgba(11,18,36,0.95));
+      box-shadow:var(--shadow);
+    }
+    .hero-card::before{
+      content:"";position:absolute;inset:0;padding:1px;border-radius:inherit;
+      background:linear-gradient(120deg,rgba(56,189,248,0.26),transparent 30%,rgba(139,92,246,0.24));
+      -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;
+    }
+    .hero-card h3{
+      font-size:1.2rem;margin-bottom:12px;color:#fff;
+    }
+    .hero-card ul{padding-left:18px;color:var(--muted);display:grid;gap:8px}
+    .hero-orb{
+      position:absolute;right:-10px;bottom:-28px;width:180px;height:180px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), rgba(56,189,248,0.16) 30%, transparent 60%);
+      filter:blur(4px);pointer-events:none;opacity:0.7;
     }
 
-    @keyframes shimmer {
-      0% { filter: hue-rotate(0deg); }
-      100% { filter: hue-rotate(20deg); }
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .card{
+      border-radius:var(--radius);padding:20px;
+      border:1px solid var(--border);background:var(--panel);box-shadow:var(--shadow);transition:transform var(--transition),border-color var(--transition),box-shadow var(--transition);
+    }
+    .card:hover{transform:translateY(-4px);border-color:rgba(56,189,248,0.35);box-shadow:0 24px 56px rgba(0,0,0,0.35)}
+    .tag{
+      display:inline-flex;padding:7px 10px;border-radius:999px;font-size:0.74rem;letter-spacing:0.08em;
+      background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.2);color:#8edcff;text-transform:uppercase;margin-bottom:10px;
+    }
+    .card h3{font-size:1.06rem;margin-bottom:8px;color:#fff}
+    .card p{color:var(--muted);margin-bottom:10px;min-height:56px}
+    .meta{font-size:0.92rem;color:#9db0c8;margin-bottom:10px}
+    .price{font-size:1.34rem;font-weight:800;margin-bottom:12px;color:#fff}
+    .card .btn{width:100%}
+    .empty{
+      grid-column:1 / -1;padding:24px;border:1px dashed var(--border);text-align:center;border-radius:18px;color:var(--muted);background:rgba(255,255,255,0.03);
     }
 
-    .hero .lead {
-      color: var(--muted);
-      font-size: 1.06rem;
-      max-width: 680px;
-      margin-bottom: 18px;
+    .course-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .search-row{
+      display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;
+    }
+    .search-row input{
+      flex:1;min-width:240px;padding:12px 14px;border-radius:14px;background:rgba(7,12,24,0.95);border:1px solid var(--border);color:#fff;outline:none;
+    }
+    .filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+    .filter-btn{
+      padding:9px 13px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text);transition:all var(--transition);
+    }
+    .filter-btn.active{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));border-color:transparent;color:#fff;box-shadow:0 10px 24px rgba(56,189,248,0.2);
     }
 
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 24px;
+    .enroll-grid{
+      display:grid;grid-template-columns:0.9fr 1.1fr;gap:20px;align-items:start;
+    }
+    .panel{
+      border-radius:var(--radius);padding:24px;border:1px solid var(--border);background:var(--panel);box-shadow:var(--shadow);
+    }
+    .panel h3{font-size:1.2rem;margin-bottom:8px;color:#fff}
+    .panel p{color:var(--muted)}
+    .feature-list{margin-top:12px;display:grid;gap:8px}
+    .feature-item{padding:10px 12px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--muted)}
+    .form-grid{display:grid;gap:12px}
+    .form-group{display:grid;gap:6px}
+    .form-label{font-size:0.9rem;color:#dce7f8}
+    input,select,textarea{
+      width:100%;padding:12px 14px;border-radius:14px;background:rgba(7,12,24,0.95);border:1px solid var(--border);color:#fff;outline:none;transition:border-color var(--transition),box-shadow var(--transition);
+    }
+    input:focus,select:focus,textarea:focus{
+      border-color:var(--accent);box-shadow:0 0 0 3px rgba(56,189,248,0.16);
+    }
+    textarea{min-height:110px;resize:vertical}
+    .status{min-height:24px;font-size:0.92rem;color:#8edcff;margin-top:4px}
+
+    .points-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+    .point-item{padding:12px 14px;border-radius:14px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--muted)}
+
+    .contact-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:20px;align-items:start}
+    .contact-card .info{margin-top:16px;display:grid;gap:10px;color:var(--muted)}
+
+    .chat-button{
+      position:fixed;right:20px;bottom:20px;width:60px;height:60px;border-radius:50%;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;display:grid;place-items:center;font-size:24px;box-shadow:var(--shadow);z-index:1100;
+    }
+    .chat-panel{
+      position:fixed;right:20px;bottom:90px;width:min(360px,calc(100vw - 24px));border-radius:24px;overflow:hidden;border:1px solid var(--border);background:rgba(6,10,24,0.94);box-shadow:var(--shadow);z-index:1090;display:none;
+    }
+    .chat-header{
+      padding:12px 14px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;display:flex;justify-content:space-between;align-items:center;font-weight:700;
+    }
+    .chat-body{
+      padding:12px;height:320px;overflow:auto;display:flex;flex-direction:column;gap:10px;background:linear-gradient(180deg,rgba(7,12,24,0.97),rgba(7,12,24,0.9));scroll-behavior:smooth;
+    }
+    .message{display:flex;gap:8px;align-items:flex-end;max-width:100%}
+    .message.user{justify-content:flex-end}
+    .message.user .bubble{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border-radius:16px 16px 6px 16px;
+    }
+    .message.bot .bubble{
+      background:rgba(255,255,255,0.08);border:1px solid var(--border);color:var(--text);border-radius:16px 16px 16px 6px;
+    }
+    .bubble{
+      padding:10px 12px;max-width:85%;font-size:0.95rem;line-height:1.5;box-shadow:0 8px 20px rgba(0,0,0,0.2);white-space:pre-wrap;
+    }
+    .avatar{
+      width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,0.08);border:1px solid var(--border);flex-shrink:0;font-size:0.95rem;
+    }
+    .timestamp{
+      font-size:0.72rem;color:#95a7bf;margin-top:4px;padding:0 2px;
+    }
+    .typing{
+      display:inline-flex;align-items:center;gap:5px;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:rgba(255,255,255,0.08);width:fit-content;
+    }
+    .typing span{
+      width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block;animation:bounce 0.8s infinite ease-in-out;
+    }
+    .typing span:nth-child(2){animation-delay:0.15s}
+    .typing span:nth-child(3){animation-delay:0.3s}
+    @keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.7}40%{transform:translateY(-4px);opacity:1}}
+
+    .quick-replies{display:flex;flex-wrap:wrap;gap:8px;padding:10px 12px;border-top:1px solid var(--border);background:rgba(255,255,255,0.03)}
+    .quick-btn{
+      border:1px solid var(--border);padding:8px 10px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--text);font-size:0.9rem;
+    }
+    .chat-input{display:flex;align-items:flex-end;gap:8px;padding:10px;border-top:1px solid var(--border);background:rgba(255,255,255,0.03)}
+    .chat-input textarea{
+      flex:1;min-height:46px;max-height:110px;resize:none;padding:10px 12px;border-radius:12px;background:rgba(7,12,24,0.95);border:1px solid var(--border);color:#fff;
+    }
+    .send-btn{
+      padding:10px 12px;border-radius:12px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;font-weight:700;
     }
 
-    .stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
+    .whatsapp{
+      position:fixed;left:20px;bottom:20px;padding:12px 16px;border-radius:999px;background:#25D366;color:#fff;font-weight:700;box-shadow:var(--shadow);z-index:1100;
     }
 
-    .stat {
-      min-width: 132px;
-      padding: 12px 14px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow);
+    footer{
+      padding:30px 0 42px;border-top:1px solid var(--border);text-align:center;color:#9fb0c8;background:rgba(3,5,14,0.8);
+    }
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.is-visible{opacity:1;transform:translateY(0)}
+
+    @media (max-width: 980px){
+      .hero-grid,.enroll-grid,.contact-grid{grid-template-columns:1fr}
+      .course-grid{grid-template-columns:1fr 1fr}
+      .grid-2{grid-template-columns:1fr}
     }
 
-    .stat strong {
-      display: block;
-      font-size: 1.15rem;
-      color: #fff;
-      margin-bottom: 4px;
-    }
-    .stat span { color: var(--muted); font-size: 0.92rem; }
-
-    .hero-card,
-    .panel,
-    .contact-box,
-    .card,
-    .enroll-card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-
-    .hero-card {
-      padding: 24px;
-      border-radius: 22px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      padding: 1px;
-      background: linear-gradient(120deg, rgba(56, 189, 248, 0.32), transparent 40%, rgba(139, 92, 246, 0.28));
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-    }
-
-    .hero-card h3 {
-      color: var(--accent);
-      margin-bottom: 10px;
-      font-size: 1.12rem;
-    }
-    .hero-card ul {
-      padding-left: 18px;
-      color: var(--muted);
-      display: grid;
-      gap: 8px;
-    }
-
-    .ai-icons {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .ai-icon {
-      position: absolute;
-      width: 54px;
-      height: 54px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.35rem;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.09);
-      border: 1px solid rgba(255,255,255,0.14);
-      backdrop-filter: blur(10px);
-      animation: drift 8s ease-in-out infinite;
-      box-shadow: var(--shadow);
-    }
-    .ai-1 { left: 8%; top: 16%; animation-delay: 0s; }
-    .ai-2 { right: 8%; top: 24%; animation-delay: 1.5s; }
-    .ai-3 { left: 18%; bottom: 18%; animation-delay: 2.3s; }
-    .ai-4 { right: 18%; bottom: 12%; animation-delay: 3.2s; }
-
-    @keyframes drift {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-14px) rotate(3deg); }
-    }
-
-    section {
-      padding: 70px 0;
-      position: relative;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 22px;
-      flex-wrap: wrap;
-    }
-    .section-head h2 { font-size: 1.75rem; }
-    .section-head .sub { color: var(--muted); }
-
-    .enroll-section {
-      padding-top: 0;
-      margin-top: -10px;
-    }
-
-    .enroll-card {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 20px;
-      border-radius: 22px;
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .enroll-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      padding: 1px;
-      background: linear-gradient(120deg, rgba(56,189,248,0.30), transparent 30%, rgba(139,92,246,0.24));
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-    }
-
-    .enroll-card h2 {
-      color: var(--accent);
-      margin-bottom: 8px;
-      font-size: 1.5rem;
-    }
-    .enroll-card p { color: var(--muted); }
-
-    .contact-form {
-      display: grid;
-      gap: 12px;
-    }
-
-    .contact-form input,
-    .contact-form select,
-    .contact-form textarea {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(8, 15, 30, 0.9);
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .contact-form input:focus,
-    .contact-form select:focus,
-    .contact-form textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.16);
-    }
-
-    .contact-form textarea {
-      min-height: 105px;
-      resize: vertical;
-    }
-
-    .contact-form .btn {
-      padding: 12px 14px;
-      border-radius: 12px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      color: white;
-      font-weight: 700;
-    }
-
-    .status {
-      min-height: 24px;
-      color: var(--accent);
-      margin-top: 4px;
-      font-size: 0.95rem;
-    }
-
-    .search-box {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-    .search-box input {
-      flex: 1;
-      min-width: 220px;
-      padding: 12px 14px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: rgba(12, 18, 32, 0.9);
-      color: var(--text);
-      outline: none;
-    }
-
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-    .filter-btn {
-      padding: 9px 13px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(17, 24, 39, 0.85);
-      color: var(--text);
-      cursor: pointer;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-    .filter-btn.active {
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      color: white;
-      border-color: transparent;
-    }
-
-    .course-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .card {
-      border-radius: 20px;
-      padding: 20px;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      border-radius: inherit;
-      padding: 1px;
-      background: linear-gradient(120deg, rgba(56,189,248,0.18), transparent 35%, rgba(139,92,246,0.2));
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-      opacity: 0.7;
-      transition: opacity 0.25s ease;
-    }
-    .card:hover {
-      transform: translateY(-6px) scale(1.01);
-      border-color: rgba(56, 189, 248, 0.42);
-      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.34), 0 0 0 1px rgba(56,189,248,0.18);
-    }
-    .card:hover::before { opacity: 1; }
-
-    .tag {
-      display: inline-block;
-      margin-bottom: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      background: rgba(56,189,248,0.12);
-      color: var(--accent);
-      border: 1px solid rgba(56,189,248,0.18);
-    }
-
-    .card h3 {
-      margin-bottom: 8px;
-      font-size: 1.08rem;
-      color: #fff;
-    }
-    .card p {
-      color: var(--muted);
-      min-height: 48px;
-      margin-bottom: 10px;
-    }
-
-    .meta {
-      color: #9fb3c8;
-      font-size: 0.95rem;
-      margin-bottom: 10px;
-    }
-
-    .price {
-      font-size: 1.46rem;
-      font-weight: 800;
-      margin-bottom: 12px;
-      color: #fff;
-    }
-
-    .card .btn {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      color: white;
-      font-weight: 700;
-      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.22);
-    }
-
-    .empty {
-      grid-column: 1 / -1;
-      padding: 24px;
-      text-align: center;
-      border: 1px dashed var(--border);
-      border-radius: 16px;
-      color: var(--muted);
-      background: rgba(255,255,255,0.03);
-    }
-
-    .why-section {
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .points-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 16px;
-    }
-    .point-item {
-      background: rgba(17, 24, 39, 0.82);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 12px 14px;
-      color: #dbeafe;
-      backdrop-filter: blur(8px);
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 24px;
-      align-items: start;
-    }
-
-    .contact-box {
-      border-radius: 20px;
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-
-    .contact-box h2 {
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-    .contact-box p,
-    .contact-box div {
-      color: var(--muted);
-      line-height: 1.75;
-    }
-
-    .chat-button {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-      z-index: 970;
-      transition: transform 0.2s ease;
-    }
-    .chat-button:hover { transform: translateY(-2px); }
-
-    .chat-box {
-      display: none;
-      position: fixed;
-      right: 20px;
-      bottom: 92px;
-      width: min(360px, calc(100vw - 24px));
-      background: rgba(10, 16, 30, 0.96);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      z-index: 969;
-      backdrop-filter: blur(16px);
-    }
-
-    .chat-header {
-      padding: 12px 14px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 700;
-    }
-
-    .chat-body {
-      padding: 12px;
-      height: 300px;
-      overflow-y: auto;
-      background: linear-gradient(180deg, rgba(3,8,20,0.96), rgba(3,8,20,0.88));
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .message {
-      display: flex;
-      gap: 8px;
-      align-items: flex-end;
-      animation: messageIn 0.32s ease both;
-    }
-    .message.user { justify-content: flex-end; }
-    .message.user .bubble { background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: white; }
-    .message.bot .bubble { background: rgba(255,255,255,0.08); color: var(--text); border: 1px solid var(--border); }
-
-    .avatar {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid var(--border);
-      flex-shrink: 0;
-      font-size: 0.95rem;
-    }
-
-    .bubble {
-      max-width: 82%;
-      padding: 10px 12px;
-      border-radius: 14px 14px 14px 8px;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.16);
-      white-space: pre-wrap;
-    }
-
-    .message.user .bubble {
-      border-radius: 14px 14px 8px 14px;
-    }
-
-    .timestamp {
-      font-size: 0.72rem;
-      color: #92a3b4;
-      margin-top: 4px;
-      text-align: right;
-    }
-
-    .typing {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid var(--border);
-      width: fit-content;
-      color: var(--muted);
-      animation: pulse 1.0s ease-in-out infinite;
-    }
-    .typing span {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-      display: inline-block;
-      animation: bounce 0.8s ease infinite;
-    }
-    .typing span:nth-child(2) { animation-delay: 0.15s; }
-    .typing span:nth-child(3) { animation-delay: 0.3s; }
-
-    @keyframes bounce {
-      0%, 80%, 100% { transform: translateY(0); opacity: 0.8; }
-      40% { transform: translateY(-4px); opacity: 1; }
-    }
-
-    @keyframes messageIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .quick-replies {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 10px 12px;
-      border-top: 1px solid var(--border);
-      background: rgba(5,8,22,0.78);
-    }
-    .quick-btn {
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 8px 10px;
-      background: rgba(255,255,255,0.06);
-      color: var(--text);
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: border-color 0.2s ease, transform 0.2s ease;
-    }
-    .quick-btn:hover {
-      border-color: var(--accent);
-      transform: translateY(-1px);
-    }
-
-    .chat-input-wrap {
-      display: flex;
-      align-items: flex-end;
-      gap: 8px;
-      padding: 10px;
-      border-top: 1px solid var(--border);
-      background: rgba(5,8,22,0.86);
-    }
-    .chat-input-wrap textarea {
-      flex: 1;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 9px 10px;
-      resize: none;
-      min-height: 42px;
-      max-height: 90px;
-      background: rgba(255,255,255,0.06);
-      color: var(--text);
-      outline: none;
-      font: inherit;
-    }
-    .chat-input-wrap textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(56,189,248,0.15);
-    }
-    .send-btn {
-      border: none;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
-      min-width: 48px;
-    }
-
-    .whatsapp {
-      position: fixed;
-      left: 20px;
-      bottom: 20px;
-      background: #25D366;
-      color: white;
-      padding: 12px 16px;
-      border-radius: 999px;
-      font-weight: 700;
-      z-index: 970;
-      box-shadow: var(--shadow);
-    }
-
-    footer {
-      padding: 28px 0 40px;
-      text-align: center;
-      color: #94a3b8;
-      border-top: 1px solid var(--border);
-      background: #020617;
-    }
-
-    .particle {
-      position: fixed;
-      width: 4px;
-      height: 4px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 50%;
-      pointer-events: none;
-      animation: particleFloat 9s linear infinite;
-      opacity: 0.7;
-      z-index: -1;
-    }
-
-    @keyframes particleFloat {
-      0% { transform: translate3d(0,0,0) scale(0.3); opacity: 0; }
-      10% { opacity: 0.7; }
-      100% { transform: translate3d(var(--dx), var(--dy), 0) scale(1); opacity: 0; }
-    }
-
-    @media (max-width: 980px) {
-      .hero-grid,
-      .enroll-card,
-      .contact-grid {
-        grid-template-columns: 1fr;
+    @media (max-width: 760px){
+      .menu-btn{display:inline-flex;align-items:center;justify-content:center}
+      .nav-links{
+        display:none;position:absolute;top:60px;right:4%;left:4%;flex-direction:column;align-items:flex-start;
+        background:rgba(6,8,22,0.97);border:1px solid var(--border);border-radius:16px;padding:14px;box-shadow:var(--shadow);
       }
-      .course-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 700px) {
-      .menu-btn { display: inline-block; }
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 66px;
-        right: 4%;
-        left: 4%;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 14px;
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        background: rgba(5, 8, 22, 0.98);
-      }
-      .nav-links.show { display: flex; }
-
-      .hero { padding-top: 60px; }
-      .course-grid { grid-template-columns: 1fr; }
-      .points-grid { grid-template-columns: 1fr; }
-      .stats { gap: 10px; }
-      .stat { min-width: 100%; }
-      .chat-button, .whatsapp { bottom: 16px; }
-      .chat-box { bottom: 78px; }
+      .nav-links.show{display:flex}
+      .hero{padding-top:66px}
+      .course-grid{grid-template-columns:1fr}
+      .points-grid{grid-template-columns:1fr}
+      .hero-stats{gap:10px}
+      .hero-stat{min-width:100%}
+      .chat-button,.whatsapp{bottom:14px}
+      .chat-panel{bottom:74px}
     }
   </style>
 </head>
 <body>
-  <div class="bg-blobs">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
+  <div id="loader" class="loader" aria-live="polite">
+    <div class="loader-box">
+      <div class="loader-mark" aria-hidden="true">
+        <svg viewBox="0 0 128 128"><path d="M64 20l16 36 38 4-29 24 9 38-34-20-34 20 9-38-29-24 38-4z"/></svg>
+      </div>
+      <h3>Welcome to Aetheria AI Academy</h3>
+      <p>Preparing your magical learning journey...</p>
+    </div>
   </div>
 
-  <div class="page-fade" id="page">
-    <header>
-      <div class="container nav">
-        <a href="#home" class="logo">
-          🚀 IMAAD AI
-          <span>CLASSES</span>
-        </a>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-        <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+  <div class="aurora"></div>
 
-        <div class="nav-links" id="navLinks">
-          <a href="#enroll">Enroll</a>
-          <a href="#courses">Courses</a>
-          <a href="#why">Why Us</a>
-          <a href="#contact">Contact</a>
-          <a href="#enroll" class="btn btn-primary">Enroll Now</a>
-        </div>
-      </div>
-    </header>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="Aetheria AI Academy home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 128 128"><path d="M64 20l16 36 38 4-29 24 9 38-34-20-34 20 9-38-29-24 38-4z"/></svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-title">AETHERIA</span>
+          <span class="brand-sub">AI ACADEMY</span>
+        </span>
+      </a>
 
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+
+      <nav class="nav-links" id="navLinks" aria-label="Primary navigation">
+        <a href="#enroll">Enroll</a>
+        <a href="#courses">Courses</a>
+        <a href="#why">Why Us</a>
+        <a href="#contact">Contact</a>
+        <a href="#enroll" class="btn btn-primary">Enroll Now</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
     <section class="hero" id="home">
       <div class="container hero-grid">
-        <div>
-          <div class="eyebrow">Premium AI Learning Platform</div>
-          <h1>Master <span class="gradient-text">AI</span>, Web, Data & Business Skills</h1>
+        <div class="reveal">
+          <div class="eyebrow">✨ Premium learning, powered by magic</div>
+          <h1>Master <span class="magic">AI</span>, Web, Data, and Creative Skills</h1>
           <p class="lead">
-            Learn with practical projects, expert guidance, and a smart support assistant that helps you every step of the way.
-            Our course prices start from <strong>₹5999</strong> and go up to <strong>₹10999</strong>.
+            Aetheria AI Academy blends practical training, expert guidance, and a premium learning experience into one unforgettable path for students and professionals.
           </p>
-
           <div class="hero-actions">
-            <a href="#courses" class="btn btn-primary">View Courses</a>
-            <a href="#enroll" class="btn btn-primary">Enroll Now</a>
+            <a href="#courses" class="btn btn-primary">Explore Courses</a>
+            <a href="#enroll" class="btn btn-secondary">Start Enrollment</a>
           </div>
-
-          <div class="stats">
-            <div class="stat"><strong id="counter1">0</strong><span>Courses</span></div>
-            <div class="stat"><strong id="counter2">0</strong><span>Projects</span></div>
-            <div class="stat"><strong id="counter3">0</strong><span>Support</span></div>
+          <div class="hero-stats">
+            <div class="hero-stat"><strong>30+</strong><span>Courses</span></div>
+            <div class="hero-stat"><strong>100%</strong><span>Practical</span></div>
+            <div class="hero-stat"><strong>24/7</strong><span>Support</span></div>
           </div>
-
-          <div class="result" id="resultText" style="margin-top: 14px; color: #dce7f4;">Browse our courses below.</div>
         </div>
 
-        <div class="hero-card">
-          <h3>Why Choose Imaad AI Classes?</h3>
+        <div class="hero-card reveal">
+          <h3>Why learners love Aetheria</h3>
           <ul>
-            <li>Beginner to advanced learning paths</li>
-            <li>Real projects and assignments</li>
-            <li>Live support and guidance</li>
-            <li>Flexible batch timing</li>
-            <li>Certificate on completion</li>
+            <li>Beginner to advanced pathways</li>
+            <li>Hands-on projects and guided practice</li>
+            <li>High-impact, modern curriculum</li>
+            <li>Flexible learning and mentor support</li>
+            <li>Career-ready outcomes and certificates</li>
           </ul>
+          <div class="hero-orb" aria-hidden="true"></div>
         </div>
-      </div>
-
-      <div class="ai-icons" aria-hidden="true">
-        <div class="ai-icon ai-1">🤖</div>
-        <div class="ai-icon ai-2">⚡</div>
-        <div class="ai-icon ai-3">🧠</div>
-        <div class="ai-icon ai-4">✨</div>
       </div>
     </section>
 
-    <section class="enroll-section" id="enroll">
+    <section class="section" id="enroll">
       <div class="container">
-        <div class="enroll-card">
-          <div>
-            <h2>Enroll Now</h2>
-            <p>Fill out the form and we will contact you shortly with the best course for your goal.</p>
+        <div class="enroll-grid">
+          <div class="panel reveal">
+            <h3>Enroll in your next chapter</h3>
+            <p>Tell us your goals and we’ll guide you to the perfect course, pace, and learning path.</p>
+            <div class="feature-list">
+              <div class="feature-item">🌟 Personalized course guidance</div>
+              <div class="feature-item">🧠 Expert-led training</div>
+              <div class="feature-item">📈 Career-focused learning outcomes</div>
+              <div class="feature-item">⚡ Fast replies and support</div>
+            </div>
           </div>
 
-          <form class="contact-form" id="enrollForm">
-            <input type="text" id="enrollName" placeholder="Your Name" required />
-            <input type="email" id="enrollEmail" placeholder="Your Email" required />
-            <input type="text" id="enrollPhone" placeholder="Your Phone" />
-            <select id="enrollCourse">
-              <option value="Select a course">Select a course</option>
-              <option value="HTML & CSS Basics">HTML & CSS Basics</option>
-              <option value="JavaScript Essentials">JavaScript Essentials</option>
-              <option value="React Development">React Development</option>
-              <option value="Python for AI">Python for AI</option>
-              <option value="Machine Learning">Machine Learning</option>
-              <option value="Advanced AI & ML">Advanced AI & ML</option>
-              <option value="Data Science Bootcamp">Data Science Bootcamp</option>
-              <option value="AI Marketing">AI Marketing</option>
-            </select>
-            <textarea id="enrollMessage" placeholder="Tell us about your goal..."></textarea>
-            <button class="btn" type="submit">Send Enrollment Request</button>
-            <div class="status" id="enrollStatus"></div>
-          </form>
+          <div class="panel reveal">
+            <form class="form-grid" id="enrollForm">
+              <div class="form-group">
+                <label class="form-label" for="enrollName">Name</label>
+                <input id="enrollName" name="name" type="text" placeholder="Your name" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="enrollEmail">Email</label>
+                <input id="enrollEmail" name="email" type="email" placeholder="you@example.com" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="enrollPhone">Phone</label>
+                <input id="enrollPhone" name="phone" type="text" placeholder="Phone number" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="enrollCourse">Course</label>
+                <select id="enrollCourse" name="course">
+                  <option value="Select a course">Select a course</option>
+                  <option value="HTML & CSS Basics">HTML & CSS Basics</option>
+                  <option value="JavaScript Essentials">JavaScript Essentials</option>
+                  <option value="React Development">React Development</option>
+                  <option value="Python for AI">Python for AI</option>
+                  <option value="Machine Learning">Machine Learning</option>
+                  <option value="Advanced AI & ML">Advanced AI & ML</option>
+                  <option value="Data Science Bootcamp">Data Science Bootcamp</option>
+                  <option value="AI Marketing">AI Marketing</option>
+                  <option value="Prompt Engineering">Prompt Engineering</option>
+                  <option value="Generative AI">Generative AI</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="enrollMessage">Goal</label>
+                <textarea id="enrollMessage" name="message" placeholder="Tell us about your target and preferred pace..."></textarea>
+              </div>
+              <button class="btn btn-primary" type="submit">Send Enrollment Request</button>
+              <div class="status" id="enrollStatus" aria-live="polite"></div>
+            </form>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="courses">
+    <section class="section" id="courses">
       <div class="container">
-        <div class="section-head">
-          <h2>Professional Courses</h2>
-          <div class="sub">Search, filter, and enroll in the perfect course</div>
+        <div class="section-title reveal">
+          <div>
+            <h2>Featured Courses</h2>
+            <p>Search, filter, and discover a path that fits your goals and pace.</p>
+          </div>
         </div>
 
-        <div class="search-box">
+        <div class="search-row reveal">
           <input id="searchInput" type="text" placeholder="Search courses..." />
         </div>
 
-        <div class="filters">
+        <div class="filters reveal">
           <button class="filter-btn active" data-category="all">All</button>
           <button class="filter-btn" data-category="web">Web</button>
           <button class="filter-btn" data-category="ai">AI</button>
           <button class="filter-btn" data-category="data">Data</button>
           <button class="filter-btn" data-category="business">Business</button>
+          <button class="filter-btn" data-category="creative">Creative</button>
         </div>
 
         <div class="course-grid" id="courseGrid"></div>
       </div>
     </section>
 
-    <section class="why-section" id="why">
+    <section class="section" id="why">
       <div class="container">
-        <div class="section-head">
-          <h2>Why Choose Us?</h2>
-          <div class="sub">20 reasons students trust Imaad AI Classes</div>
+        <div class="section-title reveal">
+          <div>
+            <h2>Why Choose Aetheria</h2>
+            <p>We combine elegance, structure, and real-world outcomes so your learning feels both inspiring and practical.</p>
+          </div>
         </div>
 
-        <div class="points-grid">
-          <div class="point-item">1. Beginner-friendly learning environment</div>
-          <div class="point-item">2. Simple and clear explanations</div>
-          <div class="point-item">3. Practical projects in every course</div>
-          <div class="point-item">4. Real-world examples and case studies</div>
-          <div class="point-item">5. Flexible learning schedule</div>
-          <div class="point-item">6. Support for doubts and questions</div>
-          <div class="point-item">7. Career-focused training</div>
-          <div class="point-item">8. Updated course content</div>
-          <div class="point-item">9. Affordable pricing from ₹5999</div>
-          <div class="point-item">10. Advanced tracks up to ₹10999</div>
-          <div class="point-item">11. Hands-on assignments</div>
-          <div class="point-item">12. Learn from basics to advanced level</div>
-          <div class="point-item">13. Easy-to-follow lessons</div>
-          <div class="point-item">14. Industry-friendly tools and methods</div>
-          <div class="point-item">15. Certification on completion</div>
-          <div class="point-item">16. Good for students and professionals</div>
-          <div class="point-item">17. Personalized guidance</div>
-          <div class="point-item">18. Build skills for future jobs</div>
-          <div class="point-item">19. Fast and friendly support</div>
-          <div class="point-item">20. Trusted by learners who want real results</div>
+        <div class="points-grid reveal">
+          <div class="point-item">1. Beginner-friendly teaching and clear guidance</div>
+          <div class="point-item">2. Practical projects in every learning path</div>
+          <div class="point-item">3. Expert support for doubts and growth</div>
+          <div class="point-item">4. Flexible pacing for students and professionals</div>
+          <div class="point-item">5. Modern tools, workflows, and industry relevance</div>
+          <div class="point-item">6. Certificates and a premium learning experience</div>
+          <div class="point-item">7. Structured courses from foundation to advanced</div>
+          <div class="point-item">8. Friendly, human support at every step</div>
         </div>
       </div>
     </section>
 
-    <section id="contact">
+    <section class="section" id="contact">
       <div class="container contact-grid">
-        <div class="contact-box">
-          <h2>Contact Us</h2>
-          <p>Want to know more? Fill the form and we will contact you soon.</p>
-          <div style="margin-top: 12px;">
+        <div class="panel contact-card reveal">
+          <h3>Let’s talk</h3>
+          <p>Have questions, want a custom track, or need guidance? We’re happy to help.</p>
+          <div class="info">
             <div>📧 Email: abida28125@gmail.com</div>
             <div>📱 WhatsApp: +91 9596191037</div>
-            <div>📍 Online classes available</div>
+            <div>🌐 Online classes available worldwide</div>
           </div>
         </div>
 
-        <div class="contact-box">
-          <form class="contact-form" id="contactForm">
-            <input type="text" id="contactName" placeholder="Your Name" required />
-            <input type="email" id="contactEmail" placeholder="Your Email" required />
-            <input type="text" id="contactPhone" placeholder="Your Phone" />
-            <textarea id="contactMessage" placeholder="Write your query here..."></textarea>
-            <button class="btn" type="submit">Send Message</button>
-            <div class="status" id="contactStatus"></div>
+        <div class="panel reveal">
+          <form class="form-grid" id="contactForm">
+            <div class="form-group">
+              <label class="form-label" for="contactName">Name</label>
+              <input id="contactName" name="name" type="text" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contactEmail">Email</label>
+              <input id="contactEmail" name="email" type="email" placeholder="you@example.com" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contactPhone">Phone</label>
+              <input id="contactPhone" name="phone" type="text" placeholder="Phone number" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contactMessage">Message</label>
+              <textarea id="contactMessage" name="message" placeholder="Write your query here..."></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Send Message</button>
+            <div class="status" id="contactStatus" aria-live="polite"></div>
           </form>
         </div>
       </div>
     </section>
-  </div>
+  </main>
 
-  <div class="chat-button" id="chatToggle" aria-label="Open chat assistant">🤖</div>
+  <div class="chat-button" id="chatToggle" aria-label="Open assistant">🤖</div>
 
-  <div class="chat-box" id="chatBox">
+  <div class="chat-panel" id="chatPanel">
     <div class="chat-header">
-      <span>✨ Imaad AI Assistant</span>
+      <span>✨ Aetheria Assistant</span>
       <span id="closeChat" style="cursor:pointer;">✖</span>
     </div>
 
-    <div class="chat-body" id="chatBody">
-      <div class="message bot">
-        <div class="avatar">🤖</div>
-        <div>
-          <div class="bubble">
-            Hi! I’m your AI learning assistant. I can help with course details, pricing, enrollment, and study guidance.
-          </div>
-          <div class="timestamp" id="time0"></div>
-        </div>
-      </div>
-    </div>
+    <div class="chat-body" id="chatBody"></div>
 
     <div class="quick-replies">
       <button class="quick-btn" data-text="Show me the courses">Courses</button>
@@ -1075,41 +589,74 @@
       <button class="quick-btn" data-text="I want Python">Python</button>
     </div>
 
-    <div class="chat-input-wrap">
-      <textarea id="chatInput" placeholder="Ask me anything..."></textarea>
+    <div class="chat-input">
+      <textarea id="chatInput" placeholder="Ask anything about courses and learning..."></textarea>
       <button class="send-btn" id="sendChat">➤</button>
     </div>
   </div>
 
-  <a class="whatsapp" href="https://wa.me/9596191037">WhatsApp Us</a>
+  <a class="whatsapp" href="https://wa.me/9596191037" target="_blank" rel="noreferrer">WhatsApp Us</a>
 
   <footer>
-    © 2026 Imaad AI Classes. All rights reserved.
+    © 2026 Aetheria AI Academy. Crafted for modern learners.
   </footer>
 
   <script>
     const courses = [
-      { title: "HTML & CSS Basics", category: "web", price: 5999, duration: "2 Weeks", desc: "Build clean and responsive websites from scratch.", badge: "Beginner" },
-      { title: "JavaScript Essentials", category: "web", price: 6999, duration: "3 Weeks", desc: "Learn logic, DOM, and interactive web pages.", badge: "Popular" },
-      { title: "React Development", category: "web", price: 7999, duration: "4 Weeks", desc: "Create modern UI apps with React.", badge: "Advanced" },
-      { title: "Full Stack Web Course", category: "web", price: 8999, duration: "6 Weeks", desc: "Frontend + backend + deployment included.", badge: "Pro" },
-      { title: "Python for AI", category: "ai", price: 9499, duration: "5 Weeks", desc: "Start your AI journey with Python basics.", badge: "Beginner" },
-      { title: "Machine Learning", category: "ai", price: 9999, duration: "6 Weeks", desc: "Learn models, data prep, and evaluation.", badge: "Popular" },
-      { title: "Advanced AI & ML", category: "ai", price: 10999, duration: "8 Weeks", desc: "Build advanced models and deployment workflows.", badge: "Expert" },
-      { title: "Generative AI", category: "ai", price: 10499, duration: "6 Weeks", desc: "Create content and automation with modern AI tools.", badge: "Trending" },
-      { title: "Data Science Bootcamp", category: "data", price: 9999, duration: "6 Weeks", desc: "Learn analysis, Python, and dashboards.", badge: "Popular" },
-      { title: "Power BI & Analytics", category: "data", price: 8999, duration: "5 Weeks", desc: "Turn data into business insights.", badge: "Practical" },
-      { title: "Cloud & DevOps Basics", category: "data", price: 10999, duration: "5 Weeks", desc: "Understand deployment, CI/CD, and cloud basics.", badge: "Advanced" },
-      { title: "AI Marketing", category: "business", price: 7499, duration: "4 Weeks", desc: "Use AI tools for campaigns and digital growth.", badge: "Business" },
-      { title: "AI Business Tools", category: "business", price: 7999, duration: "4 Weeks", desc: "Automate work with smart AI business workflows.", badge: "Business" },
-      { title: "Prompt Engineering", category: "business", price: 6499, duration: "3 Weeks", desc: "Master prompts for better AI outputs.", badge: "Practical" },
-      { title: "AI Content Creation", category: "business", price: 6999, duration: "3 Weeks", desc: "Create blogs, videos, and social content with AI.", badge: "Creative" }
+      { title: "HTML & CSS Basics", category: "web", price: 5999, duration: "2 Weeks", desc: "Build modern, responsive web pages from scratch.", badge: "Beginner" },
+      { title: "JavaScript Essentials", category: "web", price: 6999, duration: "3 Weeks", desc: "Master DOM, logic, events, and interactive web experiences.", badge: "Popular" },
+      { title: "React Development", category: "web", price: 7999, duration: "4 Weeks", desc: "Create polished frontend interfaces with React.", badge: "Advanced" },
+      { title: "Full Stack Web Course", category: "web", price: 8999, duration: "6 Weeks", desc: "Learn frontend, backend, and deployment in one path.", badge: "Pro" },
+      { title: "UI/UX Design Foundations", category: "web", price: 7499, duration: "4 Weeks", desc: "Design clean experiences with wireframes, flows, and systems.", badge: "Design" },
+      { title: "Python for AI", category: "ai", price: 9499, duration: "5 Weeks", desc: "Start your AI journey with practical Python basics.", badge: "Beginner" },
+      { title: "Machine Learning", category: "ai", price: 9999, duration: "6 Weeks", desc: "Learn models, evaluation, feature engineering, and insight.", badge: "Popular" },
+      { title: "Advanced AI & ML", category: "ai", price: 10999, duration: "8 Weeks", desc: "Build advanced pipelines, optimization, and deployment workflows.", badge: "Expert" },
+      { title: "Generative AI", category: "ai", price: 10499, duration: "6 Weeks", desc: "Create content, prompts, and automation with modern AI tools.", badge: "Trending" },
+      { title: "Prompt Engineering", category: "ai", price: 6499, duration: "3 Weeks", desc: "Master prompts for better results across AI tools.", badge: "Practical" },
+      { title: "Data Science Bootcamp", category: "data", price: 9999, duration: "6 Weeks", desc: "Work with Python, analysis, dashboards, and storytelling.", badge: "Popular" },
+      { title: "Power BI & Analytics", category: "data", price: 8999, duration: "5 Weeks", desc: "Turn raw data into useful insights and dashboards.", badge: "Practical" },
+      { title: "SQL & Database Essentials", category: "data", price: 6999, duration: "3 Weeks", desc: "Learn querying, schema design, and data operations.", badge: "Core" },
+      { title: "Cloud & DevOps Basics", category: "data", price: 10999, duration: "5 Weeks", desc: "Explore deployment, CI/CD, and basic cloud workflows.", badge: "Advanced" },
+      { title: "AI Marketing", category: "business", price: 7499, duration: "4 Weeks", desc: "Use AI to grow campaigns, content, and customer engagement.", badge: "Business" },
+      { title: "AI Business Tools", category: "business", price: 7999, duration: "4 Weeks", desc: "Automate operations and productivity with smart AI workflows.", badge: "Business" },
+      { title: "Digital Growth Strategy", category: "business", price: 8299, duration: "4 Weeks", desc: "Plan modern digital growth using AI insights and analytics.", badge: "Growth" },
+      { title: "AI Content Creation", category: "creative", price: 6999, duration: "3 Weeks", desc: "Create social media, blogs, and visuals using AI tools.", badge: "Creative" },
+      { title: "Video Editing with AI", category: "creative", price: 7999, duration: "4 Weeks", desc: "Generate and edit short-form content with AI-powered workflows.", badge: "Creative" },
+      { title: "No-Code Automation", category: "creative", price: 6899, duration: "3 Weeks", desc: "Build useful automations without traditional programming.", badge: "Automation" },
+      { title: "Cybersecurity Basics", category: "data", price: 8499, duration: "4 Weeks", desc: "Learn digital safety, privacy, and practical protection methods.", badge: "Security" },
+      { title: "AI Product Basics", category: "business", price: 8799, duration: "4 Weeks", desc: "Design smart digital products using AI-driven thinking.", badge: "Product" },
+      { title: "Automation for Teams", category: "business", price: 7599, duration: "3 Weeks", desc: "Use AI and automation to streamline everyday team work.", badge: "Ops" },
+      { title: "Ethical AI & Responsible Design", category: "ai", price: 7299, duration: "3 Weeks", desc: "Understand fairness, safety, and good practices in AI work.", badge: "Ethics" },
+      { title: "Excel for Data Work", category: "data", price: 6499, duration: "3 Weeks", desc: "Get comfortable using Excel for analysis and reporting.", badge: "Practical" },
+      { title: "Git & GitHub Essentials", category: "web", price: 6299, duration: "2 Weeks", desc: "Learn version control and modern collaborative workflows.", badge: "Workflow" },
+      { title: "AI for Students", category: "ai", price: 5999, duration: "2 Weeks", desc: "Learn practical AI tools that improve study, writing, and productivity.", badge: "Student" },
+      { title: "Chatbot Design", category: "creative", price: 7699, duration: "4 Weeks", desc: "Create conversation experiences for support, education, and business.", badge: "Bot" },
+      { title: "Web3 & AI Basics", category: "web", price: 8499, duration: "4 Weeks", desc: "Explore the intersection of modern web trends and AI workflows.", badge: "Emerging" }
     ];
 
     const state = { category: "all", search: "", selectedCourse: null };
     const courseGrid = document.getElementById("courseGrid");
-    const resultText = document.getElementById("resultText");
     const searchInput = document.getElementById("searchInput");
+    const enrollStatus = document.getElementById("enrollStatus");
+    const contactStatus = document.getElementById("contactStatus");
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+    const chatToggle = document.getElementById("chatToggle");
+    const chatPanel = document.getElementById("chatPanel");
+    const closeChat = document.getElementById("closeChat");
+    const chatBody = document.getElementById("chatBody");
+    const chatInput = document.getElementById("chatInput");
+    const sendChat = document.getElementById("sendChat");
+    const loader = document.getElementById("loader");
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
 
     function renderCourses() {
       const filtered = courses.filter(course => {
@@ -1119,24 +666,22 @@
         return matchCategory && matchSearch;
       });
 
-      if (filtered.length === 0) {
-        courseGrid.innerHTML = `<div class="empty">No course found. Try another keyword.</div>`;
-        resultText.textContent = "No matching courses found.";
+      if (!filtered.length) {
+        courseGrid.innerHTML = `<div class="empty">No course found. Try another filter or keyword.</div>`;
         return;
       }
 
       courseGrid.innerHTML = filtered.map(course => `
-        <div class="card">
-          <span class="tag">${course.badge}</span>
-          <h3>${course.title}</h3>
-          <p>${course.desc}</p>
-          <div class="meta">Duration: ${course.duration}</div>
+        <article class="card reveal">
+          <span class="tag">${escapeHtml(course.badge)}</span>
+          <h3>${escapeHtml(course.title)}</h3>
+          <p>${escapeHtml(course.desc)}</p>
+          <div class="meta">Duration: ${escapeHtml(course.duration)}</div>
           <div class="price">₹${course.price}</div>
-          <button class="btn enroll-btn" data-course="${course.title}">Enroll Now</button>
-        </div>
+          <button class="btn btn-primary enroll-btn" type="button" data-course="${escapeHtml(course.title)}">Enroll Now</button>
+        </article>
       `).join("");
-
-      resultText.textContent = `Showing ${filtered.length} course(s) from ₹5999 to ₹10999.`;
+      observeReveals();
     }
 
     document.querySelectorAll(".filter-btn").forEach(btn => {
@@ -1148,244 +693,130 @@
       });
     });
 
-    searchInput.addEventListener("input", (e) => {
+    searchInput.addEventListener("input", e => {
       state.search = e.target.value.trim();
       renderCourses();
     });
 
-    courseGrid.addEventListener("click", (e) => {
-      if (e.target.classList.contains("enroll-btn")) {
-        const title = e.target.dataset.course;
-        openEnrollmentForm(title);
-      }
+    courseGrid.addEventListener("click", e => {
+      const button = e.target.closest(".enroll-btn");
+      if (!button) return;
+      const title = button.dataset.course;
+      openEnrollmentForm(title);
     });
 
     function openEnrollmentForm(courseTitle) {
-      document.getElementById("enroll").scrollIntoView({ behavior: "smooth", block: "start" });
+      const section = document.getElementById("enroll");
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
       const select = document.getElementById("enrollCourse");
-      if (courseTitle && Array.from(select.options).some(o => o.value === courseTitle)) {
+      if (courseTitle && Array.from(select.options).some(option => option.value === courseTitle)) {
         select.value = courseTitle;
       }
       document.getElementById("enrollName").focus();
+      state.selectedCourse = courseTitle || null;
     }
 
-    const FORM_PROVIDER = "emailjs"; // "emailjs" | "firebase" | "supabase" | "php" | "node"
-    const FORM_CONFIG = {
-      emailjs: {
-        publicKey: "YOUR_EMAILJS_PUBLIC_KEY",
-        serviceId: "YOUR_EMAILJS_SERVICE_ID",
-        templateId: "YOUR_EMAILJS_TEMPLATE_ID"
-      },
-      firebase: {
-        url: "https://YOUR-FIREBASE-PROJECT.firebaseio.com/submissions.json"
-      },
-      supabase: {
-        url: "https://YOUR-SUPABASE-PROJECT.supabase.co/rest/v1/submissions",
-        anonKey: "YOUR_SUPABASE_ANON_KEY"
-      },
-      php: {
-        url: "/php/submit.php"
-      },
-      node: {
-        url: "/api/submit-form"
-      }
+    const FORM_PROVIDER = window.FORM_PROVIDER || "local";
+    const EMAILJS_CONFIG = {
+      publicKey: window.EMAILJS_PUBLIC_KEY || "",
+      serviceId: window.EMAILJS_SERVICE_ID || "",
+      templateId: window.EMAILJS_TEMPLATE_ID || ""
     };
 
+    function fallbackSubmission(kind, payload) {
+      const entry = { kind, ...payload, createdAt: new Date().toISOString() };
+      try {
+        const list = JSON.parse(localStorage.getItem("aetheriaFormSubmissions") || "[]");
+        list.push(entry);
+        localStorage.setItem("aetheriaFormSubmissions", JSON.stringify(list));
+      } catch (error) {
+        console.warn("Local storage unavailable", error);
+      }
+      return { ok: true, mode: "local-storage", entry };
+    }
+
     async function submitFormData(kind, payload) {
-      const provider = FORM_PROVIDER;
-      const config = FORM_CONFIG[provider];
+      const hasEmailjsConfig =
+        EMAILJS_CONFIG.publicKey &&
+        !EMAILJS_CONFIG.publicKey.includes("YOUR") &&
+        EMAILJS_CONFIG.serviceId &&
+        !EMAILJS_CONFIG.serviceId.includes("YOUR") &&
+        EMAILJS_CONFIG.templateId &&
+        !EMAILJS_CONFIG.templateId.includes("YOUR");
 
-      if (!config) throw new Error("Invalid form provider");
-
-      if (provider === "emailjs") {
-        if (!window.emailjs) throw new Error("EmailJS not loaded");
-        if (config.publicKey.includes("YOUR") || config.serviceId.includes("YOUR") || config.templateId.includes("YOUR")) {
-          throw new Error("EmailJS credentials not configured");
-        }
-        if (!window.emailjs.init) {
-          throw new Error("EmailJS init not available");
-        }
-        window.emailjs.init(config.publicKey);
-
-        const templateParams = {
-          subject: kind === "enrollment" ? "Enrollment Request - Imaad AI Classes" : "Contact Request - Imaad AI Classes",
-          name: payload.name,
-          email: payload.email,
-          phone: payload.phone || "N/A",
-          course: payload.course || "N/A",
-          message: payload.message || "N/A",
-          type: kind
-        };
-
-        const result = await window.emailjs.send(config.serviceId, config.templateId, templateParams);
-        if (!result || result.status !== 200) throw new Error("EmailJS send failed");
-        return result;
-      }
-
-      if (provider === "firebase") {
-        const res = await fetch(config.url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ kind, ...payload, createdAt: new Date().toISOString() })
-        });
-        if (!res.ok) throw new Error("Firebase submission failed");
-        return res.json();
-      }
-
-      if (provider === "supabase") {
-        const res = await fetch(config.url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": config.anonKey,
-            "Authorization": `Bearer ${config.anonKey}`,
-            "Prefer": "return=representation"
-          },
-          body: JSON.stringify([{ kind, ...payload, created_at: new Date().toISOString() }])
-        });
-        if (!res.ok) throw new Error("Supabase submission failed");
-        return res.json();
-      }
-
-      if (provider === "php") {
-        const res = await fetch(config.url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ kind, ...payload })
-        });
-        if (!res.ok) throw new Error("PHP backend submission failed");
-        return res.json();
-      }
-
-      if (provider === "node") {
-        const res = await fetch(config.url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ kind, ...payload })
-        });
-        if (!res.ok) throw new Error("Node backend submission failed");
-        return res.json();
-      }
-
-      throw new Error("No form provider selected");
-    }
-
-    document.getElementById("enrollForm").addEventListener("submit", async function (e) {
-      e.preventDefault();
-      const name = document.getElementById("enrollName").value.trim();
-      const email = document.getElementById("enrollEmail").value.trim();
-      const status = document.getElementById("enrollStatus");
-
-      if (!name || !email) {
-        status.textContent = "Please enter your name and email.";
-        return;
-      }
-
-      try {
-        await submitFormData("enrollment", {
-          name,
-          email,
-          phone: document.getElementById("enrollPhone").value.trim(),
-          course: document.getElementById("enrollCourse").value,
-          message: document.getElementById("enrollMessage").value.trim()
-        });
-
-        status.textContent = "Thanks! Your enrollment request was submitted successfully.";
-        e.target.reset();
-      } catch (err) {
-        console.error(err);
-        status.textContent = "Submission failed. Please contact us directly.";
-      }
-    });
-
-    document.getElementById("contactForm").addEventListener("submit", async function (e) {
-      e.preventDefault();
-      const name = document.getElementById("contactName").value.trim();
-      const email = document.getElementById("contactEmail").value.trim();
-      const status = document.getElementById("contactStatus");
-
-      if (!name || !email) {
-        status.textContent = "Please enter your name and email.";
-        return;
-      }
-
-      try {
-        await submitFormData("contact", {
-          name,
-          email,
-          phone: document.getElementById("contactPhone").value.trim(),
-          message: document.getElementById("contactMessage").value.trim()
-        });
-
-        status.textContent = "Thanks! Your message was submitted successfully.";
-        e.target.reset();
-      } catch (err) {
-        console.error(err);
-        status.textContent = "Submission failed. Please contact us directly.";
-      }
-    });
-
-    document.getElementById("menuBtn").addEventListener("click", () => {
-      document.getElementById("navLinks").classList.toggle("show");
-    });
-
-    function animateCounters() {
-      const targets = [
-        { el: document.getElementById("counter1"), value: 20 },
-        { el: document.getElementById("counter2"), value: 100 },
-        { el: document.getElementById("counter3"), value: 24 }
-      ];
-
-      targets.forEach(item => {
-        let current = 0;
-        const step = item.value === 100 ? 2 : 1;
-        const interval = setInterval(() => {
-          current += step;
-          if (current >= item.value) {
-            current = item.value;
-            clearInterval(interval);
+      if (FORM_PROVIDER === "emailjs" && hasEmailjsConfig && window.emailjs) {
+        try {
+          if (typeof window.emailjs.init === "function") {
+            window.emailjs.init(EMAILJS_CONFIG.publicKey);
           }
-          item.el.textContent = `${current}${item.value === 24 ? "/7" : item.value === 100 ? "%" : "+"}`;
-        }, 30);
-      });
+          const templateParams = {
+            subject: kind === "enrollment" ? "Enrollment Request - Aetheria AI Academy" : "Contact Request - Aetheria AI Academy",
+            name: payload.name,
+            email: payload.email,
+            phone: payload.phone || "N/A",
+            course: payload.course || "N/A",
+            message: payload.message || "N/A",
+            type: kind
+          };
+          const result = await window.emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, templateParams);
+          if (result && result.status === 200) return result;
+        } catch (error) {
+          console.warn("EmailJS failed, using fallback", error);
+        }
+      }
+
+      return fallbackSubmission(kind, payload);
     }
 
-    function createParticles() {
-      const count = 24;
-      for (let i = 0; i < count; i++) {
-        const p = document.createElement("div");
-        p.className = "particle";
-        const size = 3 + Math.random() * 3;
-        p.style.width = `${size}px`;
-        p.style.height = `${size}px`;
-        p.style.left = `${Math.random() * 100}vw`;
-        p.style.top = `${Math.random() * 100}vh`;
-        p.style.setProperty("--dx", `${(Math.random() - 0.5) * 250}px`);
-        p.style.setProperty("--dy", `${-300 - Math.random() * 220}px`);
-        p.style.animationDuration = `${8 + Math.random() * 5}s`;
-        p.style.animationDelay = `${Math.random() * 4}s`;
-        document.body.appendChild(p);
+    async function handleFormSubmit(event, kind, statusElement) {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const formData = new FormData(form);
+      const payload = Object.fromEntries(formData.entries());
+      const name = payload.name?.toString().trim() || "";
+      const email = payload.email?.toString().trim() || "";
+
+      if (!name || !email) {
+        statusElement.textContent = "Please enter your name and email.";
+        return;
+      }
+
+      statusElement.textContent = "Sending your request...";
+      try {
+        await submitFormData(kind, payload);
+        statusElement.textContent = "Thanks! Your request is received. We’ll be in touch soon.";
+        form.reset();
+      } catch (error) {
+        console.error(error);
+        statusElement.textContent = "Submission failed. Please contact us directly.";
       }
     }
 
-    const chatToggle = document.getElementById("chatToggle");
-    const chatBox = document.getElementById("chatBox");
-    const closeChat = document.getElementById("closeChat");
-    const chatBody = document.getElementById("chatBody");
-    const chatInput = document.getElementById("chatInput");
-    const sendChat = document.getElementById("sendChat");
+    document.getElementById("enrollForm").addEventListener("submit", e => handleFormSubmit(e, "enrollment", enrollStatus));
+    document.getElementById("contactForm").addEventListener("submit", e => handleFormSubmit(e, "contact", contactStatus));
+
+    menuBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+    });
+
+    document.querySelectorAll(".nav-links a").forEach(link => {
+      link.addEventListener("click", () => navLinks.classList.remove("show"));
+    });
 
     function addTimestamp() {
-      const now = new Date();
-      return now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+      return new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
     }
 
     function addMessage(text, sender = "bot") {
-      const type = sender === "user" ? "user" : "bot";
-      const wrap = document.createElement("div");
-      wrap.className = `message ${type}`;
+      const wrapper = document.createElement("div");
+      wrapper.className = `message ${sender}`;
 
-      const bubbleWrapper = document.createElement("div");
+      const avatar = document.createElement("div");
+      avatar.className = "avatar";
+      avatar.textContent = sender === "user" ? "🧑" : "✦";
+
+      const bubbleWrap = document.createElement("div");
+      bubbleWrap.style.maxWidth = "100%";
 
       const bubble = document.createElement("div");
       bubble.className = "bubble";
@@ -1395,18 +826,20 @@
       stamp.className = "timestamp";
       stamp.textContent = addTimestamp();
 
-      bubbleWrapper.appendChild(bubble);
-      bubbleWrapper.appendChild(stamp);
+      bubbleWrap.appendChild(bubble);
+      bubbleWrap.appendChild(stamp);
 
-      if (type === "bot") {
-        const avatar = document.createElement("div");
-        avatar.className = "avatar";
-        avatar.textContent = "🤖";
-        wrap.appendChild(avatar);
+      if (sender === "bot") {
+        wrapper.appendChild(avatar);
       }
 
-      wrap.appendChild(bubbleWrapper);
-      chatBody.appendChild(wrap);
+      wrapper.appendChild(bubbleWrap);
+
+      if (sender === "user") {
+        wrapper.appendChild(avatar);
+      }
+
+      chatBody.appendChild(wrapper);
       chatBody.scrollTop = chatBody.scrollHeight;
     }
 
@@ -1414,7 +847,7 @@
       const wrap = document.createElement("div");
       wrap.className = "message bot";
       wrap.innerHTML = `
-        <div class="avatar">🤖</div>
+        <div class="avatar">✦</div>
         <div class="typing">
           <span></span><span></span><span></span>
         </div>
@@ -1428,29 +861,8 @@
       if (el && el.parentNode) el.parentNode.removeChild(el);
     }
 
-    function levenshteinDistance(a, b) {
-      const dp = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
-      for (let i = 0; i <= a.length; i++) dp[i][0] = i;
-      for (let j = 0; j <= b.length; j++) dp[0][j] = j;
-      for (let i = 1; i <= a.length; i++) {
-        for (let j = 1; j <= b.length; j++) {
-          const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-          dp[i][j] = Math.min(
-            dp[i - 1][j] + 1,
-            dp[i][j - 1] + 1,
-            dp[i - 1][j - 1] + cost
-          );
-        }
-      }
-      return dp[a.length][b.length];
-    }
-
     function normalizeText(text) {
-      return text
-        .toLowerCase()
-        .replace(/[^a-z0-9\s]/g, " ")
-        .replace(/\s+/g, " ")
-        .trim();
+      return text.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
     }
 
     function correctText(text) {
@@ -1459,51 +871,32 @@
         enrool: "enroll",
         enrol: "enroll",
         enroll: "enroll",
-        admsion: "admission",
-        admision: "admission",
-        regster: "register",
-        registor: "register",
         pythin: "python",
-        machin: "machine",
-        learnng: "learning",
         javscript: "javascript",
         js: "javascript",
-        reactjs: "react",
         corse: "course",
         jion: "join",
-        admision: "admission",
-        take: "take"
+        learnng: "learning",
+        machien: "machine"
       };
 
       const words = raw.split(" ").map(word => replacements[word] || word);
-      let corrected = words.join(" ");
-
-      corrected = corrected.replace(/\bmachine learnng\b/g, "machine learning");
-      corrected = corrected.replace(/\bjoin now\b/g, "join now");
-
-      const known = ["enroll", "admission", "register", "join", "python", "react", "javascript", "html", "css", "machine", "learning", "data", "science", "course", "price", "cost", "form", "study", "now"];
-      const correctedWords = corrected.split(" ").map(word => {
-        let best = word;
-        let bestDistance = Infinity;
-        known.forEach(k => {
-          const dist = levenshteinDistance(word, k);
-          if (dist < bestDistance && dist <= 2) {
-            bestDistance = dist;
-            best = k;
-          }
-        });
-        return best;
-      });
-
-      corrected = correctedWords.join(" ");
+      let corrected = words.join(" ").replace(/\s+/g, " ");
       corrected = corrected.charAt(0).toUpperCase() + corrected.slice(1);
       if (!/[?.!]$/.test(corrected)) corrected += ".";
       return corrected;
     }
 
-    function findCourseByQuery(text) {
-      const q = correctText(text).toLowerCase();
+    function detectIntent(text) {
+      const corrected = correctText(text).toLowerCase();
+      if (/\b(enroll|enrol|join|register|admission)\b/.test(corrected)) return "enroll";
+      if (/\b(price|cost|fee|how much)\b/.test(corrected)) return "price";
+      if (/\b(course|python|react|javascript|html|css|machine learning|data science|generative|prompt|marketing|content|cloud|devops)\b/.test(corrected)) return "course";
+      return "general";
+    }
 
+    function findCourseByQuery(text) {
+      const q = normalizeText(text);
       if (q.includes("python")) return courses.find(c => c.title.toLowerCase().includes("python")) || null;
       if (q.includes("react")) return courses.find(c => c.title.toLowerCase().includes("react")) || null;
       if (q.includes("javascript")) return courses.find(c => c.title.toLowerCase().includes("javascript")) || null;
@@ -1511,155 +904,125 @@
       if (q.includes("machine learning")) return courses.find(c => c.title.toLowerCase().includes("machine learning")) || null;
       if (q.includes("data science")) return courses.find(c => c.title.toLowerCase().includes("data science")) || null;
       if (q.includes("generative")) return courses.find(c => c.title.toLowerCase().includes("generative")) || null;
-      if (q.includes("power bi")) return courses.find(c => c.title.toLowerCase().includes("power bi")) || null;
       if (q.includes("prompt")) return courses.find(c => c.title.toLowerCase().includes("prompt")) || null;
       if (q.includes("marketing")) return courses.find(c => c.title.toLowerCase().includes("marketing")) || null;
-      if (q.includes("business tools")) return courses.find(c => c.title.toLowerCase().includes("business tools")) || null;
-      if (q.includes("content")) return courses.find(c => c.title.toLowerCase().includes("content")) || null;
       if (q.includes("cloud")) return courses.find(c => c.title.toLowerCase().includes("cloud")) || null;
       return null;
     }
 
-    function detectIntent(text) {
-      const corrected = correctText(text).toLowerCase();
-      const enrollRegex = /\b(enroll|enrol|enrool|admission|register|register me|join|join course|take admission|i want to study|i want this course|sign me up|book seat|reserve my seat)\b/;
-      const priceRegex = /\b(price|cost|fee|how much)\b/;
-      const courseRegex = /\b(python|react|html|css|javascript|machine learning|data science|generative ai|power bi|prompt engineering|ai marketing|cloud|devops|content creation|course)\b/;
-
-      if (enrollRegex.test(corrected)) return "enroll";
-      if (priceRegex.test(corrected)) return "price";
-      if (courseRegex.test(corrected)) return "course";
-      return "general";
-    }
-
-    const conversationMemory = [];
-
-    function buildSystemPrompt() {
-      return `
-You are ChatGPT-style AI assistant for Imaad AI Classes.
-Help visitors with courses, pricing, enrollment, contact details, and study guidance.
-Be friendly, professional, human-like, concise, and supportive.
-If the user asks to enroll, guide them to the form and open it.
-If the user mentions a course, remember it and use it in follow-up replies.
-Use the current selected course if available.
-If the user has spelling mistakes, politely correct them and continue.
-`;
-    }
-
-    async function getAIReply(rawText) {
+    function getAIReply(rawText) {
       const corrected = correctText(rawText);
       const intent = detectIntent(rawText);
-      const lower = corrected.toLowerCase();
       const foundCourse = findCourseByQuery(rawText);
 
       if (foundCourse) {
         state.selectedCourse = foundCourse;
       }
 
-      conversationMemory.push({ role: "user", content: rawText });
-      const memoryContext = conversationMemory.slice(-6).map(m => `${m.role}: ${m.content}`).join("\n");
-
-      const systemPrompt = buildSystemPrompt();
-      const contextText = `System: ${systemPrompt}\nConversation:\n${memoryContext}\nUser: ${corrected}`;
-
-      // Real ChatGPT integration can be added here through your own backend/proxy.
-      // For now this keeps the website fully functional with a premium AI-style response.
       if (intent === "enroll") {
         openEnrollmentForm(state.selectedCourse ? state.selectedCourse.title : "");
-        return `Great! I’ve opened the enrollment form for you below. Fill in your details and we’ll contact you shortly.`;
+        return "Absolutely — I’ve opened the enrollment section for you. Fill in your details and we’ll guide you to the best course.";
       }
 
       if (intent === "price") {
         if (state.selectedCourse) {
-          return `${state.selectedCourse.title} costs ₹${state.selectedCourse.price}. It is a great choice if you want practical learning.`;
+          return `${state.selectedCourse.title} costs ₹${state.selectedCourse.price}. It is a strong choice for practical learning.`;
         }
         return "Our courses start from ₹5999 and go up to ₹10999 depending on the course and level.";
       }
 
       if (intent === "course" && foundCourse) {
-        state.selectedCourse = foundCourse;
         return `${foundCourse.title} is an excellent choice. It is designed to help you build practical skills quickly. Would you like to enroll or see the price?`;
       }
 
-      if (lower.includes("hello") || lower.includes("hi")) {
-        return "Hello! I’m Imaad AI Assistant. I can help with courses, pricing, enrollment, and study guidance.";
+      if (/hello|hi/.test(corrected.toLowerCase())) {
+        return "Hello! I’m Aetheria Assistant. I can help with courses, pricing, enrollment, and study guidance.";
       }
 
-      if (lower.includes("show me the courses") || lower.includes("courses")) {
+      if (/courses|show/.test(corrected.toLowerCase())) {
         document.getElementById("courses").scrollIntoView({ behavior: "smooth", block: "start" });
-        return "Absolutely — I’ve brought the course catalog into view for you. Pick a course and I’ll help you enroll.";
+        return "Absolutely — I’ve brought the course list into view for you.";
       }
 
-      if (lower.includes("contact") || lower.includes("email")) {
+      if (/contact|email/.test(corrected.toLowerCase())) {
         return "You can reach us at abida28125@gmail.com or WhatsApp us at +91 9596191037.";
       }
 
-      if (lower.includes("thanks") || lower.includes("thank you")) {
-        return "You’re very welcome! I’m happy to help.";
+      if (/thanks|thank you/.test(corrected.toLowerCase())) {
+        return "You’re welcome. I’m happy to help.";
       }
 
-      return "Absolutely! I’d be happy to help you with the right course, pricing, or enrollment steps. If you want, I can also recommend a course based on your goal.";
+      return "I can help with course recommendations, pricing, enrollment, and learning guidance. Tell me what you want to learn.";
     }
 
-    async function sendMessage() {
+    async function sendChatMessage() {
       const raw = chatInput.value.trim();
       if (!raw) return;
 
-      addMessage(raw.replace(/\n/g, "<br>"), "user");
-
+      addMessage(escapeHtml(raw).replace(/\\n/g, "<br>"), "user");
+      chatInput.value = "";
       const typing = addTypingIndicator();
 
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
+      await new Promise(resolve => setTimeout(resolve, 900));
       removeTypingIndicator(typing);
 
       const corrected = correctText(raw);
-      let responseText = await getAIReply(raw);
+      let response = await getAIReply(raw);
 
       if (corrected.toLowerCase() !== raw.toLowerCase()) {
-        responseText = `I understood your request as: "${corrected}"<br><br>${responseText}`;
+        response = `I understood your request as: "${corrected}"<br><br>${response}`;
       }
 
-      addMessage(responseText, "bot");
-      chatInput.value = "";
-      chatBody.scrollTop = chatBody.scrollHeight;
+      addMessage(response, "bot");
     }
 
     chatToggle.addEventListener("click", () => {
-      chatBox.style.display = chatBox.style.display === "block" ? "none" : "block";
-      if (chatBox.style.display === "block") {
-        chatInput.focus();
-      }
+      chatPanel.style.display = chatPanel.style.display === "block" ? "none" : "block";
+      if (chatPanel.style.display === "block") chatInput.focus();
     });
 
     closeChat.addEventListener("click", () => {
-      chatBox.style.display = "none";
+      chatPanel.style.display = "none";
     });
 
-    sendChat.addEventListener("click", sendMessage);
+    sendChat.addEventListener("click", sendChatMessage);
 
-    chatInput.addEventListener("keydown", (e) => {
+    chatInput.addEventListener("keydown", e => {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
-        sendMessage();
+        sendChatMessage();
       }
     });
 
     document.querySelectorAll(".quick-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         chatInput.value = btn.dataset.text;
-        sendMessage();
+        sendChatMessage();
       });
     });
 
+    function observeReveals() {
+      document.querySelectorAll(".reveal").forEach(el => {
+        el.classList.remove("is-visible");
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.disconnect();
+            }
+          });
+        }, { threshold: 0.12 });
+        observer.observe(el);
+      });
+    }
+
     window.addEventListener("load", () => {
       renderCourses();
-      animateCounters();
-      createParticles();
-      document.getElementById("time0").textContent = addTimestamp();
+      observeReveals();
       setTimeout(() => {
-        document.getElementById("page").classList.add("is-visible");
-      }, 80);
+        loader.classList.add("hidden");
+      }, 850);
+      addMessage("Hello! I’m Aetheria Assistant. I can help with courses, pricing, enrollment, and study guidance.", "bot");
     });
   </script>
 </body>
