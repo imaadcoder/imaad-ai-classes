@@ -2,46 +2,95 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Imaad AI Classes</title>
+  <title>Imaad AI Classes | Premium AI Learning Platform</title>
+  <meta name="description" content="Premium AI, web, and data learning platform with smart enrollment and AI chatbot support." />
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <style>
     :root {
+      color-scheme: dark;
       --bg: #050816;
-      --panel: #101728;
-      --panel-2: #172132;
+      --bg-2: #08111f;
+      --panel: rgba(15, 23, 42, 0.74);
+      --panel-2: rgba(17, 24, 39, 0.92);
       --text: #f8fafc;
       --muted: #cbd5e1;
       --accent: #38bdf8;
       --accent-2: #2563eb;
-      --border: #243447;
+      --accent-3: #8b5cf6;
+      --border: rgba(255, 255, 255, 0.12);
+      --shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
+      font-family: "Segoe UI", Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(56,189,248,0.22), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(37,99,235,0.20), transparent 32%),
-        linear-gradient(135deg, #050816 0%, #07111f 45%, #111c35 100%);
+        radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.20), transparent 24%),
+        radial-gradient(circle at 80% 10%, rgba(37, 99, 235, 0.18), transparent 22%),
+        radial-gradient(circle at 50% 100%, rgba(139, 92, 246, 0.16), transparent 28%),
+        linear-gradient(135deg, #050816 0%, #08111f 40%, #121b2f 100%);
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 30px 30px;
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: -3;
+    }
+
+    .bg-blobs { position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; }
+    .blob {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(70px);
+      opacity: 0.32;
+      animation: floatBlob 10s ease-in-out infinite;
+    }
+    .blob-1 { width: 220px; height: 220px; left: -40px; top: 10%; background: #38bdf8; animation-delay: 0s; }
+    .blob-2 { width: 280px; height: 280px; right: -60px; top: 8%; background: #2563eb; animation-delay: 1.5s; }
+    .blob-3 { width: 240px; height: 240px; left: 25%; bottom: -60px; background: #8b5cf6; animation-delay: 2.5s; }
+
+    @keyframes floatBlob {
+      0%, 100% { transform: translate3d(0,0,0) scale(1); }
+      50% { transform: translate3d(20px,-25px,0) scale(1.06); }
+    }
+
+    .page-fade {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .page-fade.is-visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
 
     .container {
-      width: min(1180px, 92%);
+      width: min(1200px, 92%);
       margin: 0 auto;
     }
 
     header {
       position: sticky;
       top: 0;
-      background: rgba(5, 8, 22, 0.95);
-      border-bottom: 1px solid var(--border);
       z-index: 1000;
-      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      background: rgba(5, 8, 22, 0.8);
+      backdrop-filter: blur(14px);
     }
 
     .nav {
@@ -52,15 +101,15 @@
     }
 
     .logo {
-      font-size: 1.35rem;
+      font-size: 1.34rem;
       font-weight: 800;
       color: var(--accent);
+      letter-spacing: 0.8px;
     }
-
     .logo span {
       display: block;
-      font-size: 0.7rem;
-      letter-spacing: .25em;
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
       color: #fff;
       margin-top: 3px;
     }
@@ -71,17 +120,19 @@
       gap: 16px;
       color: var(--muted);
     }
-
     .nav-links a:hover { color: #fff; }
 
     .btn {
       display: inline-block;
       border: none;
       cursor: pointer;
-      transition: transform .2s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
     }
-
-    .btn:hover { transform: translateY(-2px); }
+    .btn:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.05);
+      box-shadow: 0 10px 24px rgba(56, 189, 248, 0.2);
+    }
 
     .btn-primary {
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
@@ -89,85 +140,188 @@
       padding: 12px 16px;
       border-radius: 999px;
       font-weight: 700;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.24);
+    }
+
+    .menu-btn {
+      display: none;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 8px 10px;
+      border-radius: 10px;
+      cursor: pointer;
     }
 
     .hero {
       padding: 90px 0 70px;
+      position: relative;
+      overflow: hidden;
       background:
         linear-gradient(120deg, rgba(3,8,20,0.86), rgba(15,23,42,0.72)),
-        url("https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1600&q=80");
+        url("https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1800&q=80");
       background-size: cover;
       background-position: center;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 30px;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 28px;
       align-items: center;
     }
 
-    .hero h1 {
-      font-size: clamp(2.15rem, 4vw, 3.3rem);
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.88rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #dbeafe;
+      background: rgba(255,255,255,0.08);
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
       margin-bottom: 12px;
-      line-height: 1.2;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.3rem, 4vw, 3.6rem);
+      line-height: 1.1;
+      margin-bottom: 12px;
+      letter-spacing: -0.6px;
+    }
+
+    .hero h1 .gradient-text {
+      background: linear-gradient(90deg, var(--accent), #8b5cf6 40%, #fff 90%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+      animation: shimmer 6s linear infinite alternate;
+    }
+
+    @keyframes shimmer {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(20deg); }
     }
 
     .hero .lead {
       color: var(--muted);
-      font-size: 1.05rem;
+      font-size: 1.06rem;
+      max-width: 680px;
       margin-bottom: 18px;
-      max-width: 700px;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
     .stats {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      color: var(--muted);
     }
 
     .stat {
-      background: rgba(255,255,255,0.08);
+      min-width: 132px;
+      padding: 12px 14px;
+      border-radius: 16px;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 12px;
-      min-width: 130px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
     }
 
     .stat strong {
       display: block;
+      font-size: 1.15rem;
       color: #fff;
-      font-size: 1.02rem;
+      margin-bottom: 4px;
     }
+    .stat span { color: var(--muted); font-size: 0.92rem; }
 
-    .hero-card, .panel {
-      background: rgba(17,24,39,0.95);
+    .hero-card,
+    .panel,
+    .contact-box,
+    .card,
+    .enroll-card {
+      background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.32);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
     }
 
-    .hero-card h3, .panel h2 {
+    .hero-card {
+      padding: 24px;
+      border-radius: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(120deg, rgba(56, 189, 248, 0.32), transparent 40%, rgba(139, 92, 246, 0.28));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .hero-card h3 {
       color: var(--accent);
       margin-bottom: 10px;
+      font-size: 1.12rem;
     }
-
-    .hero-card ul, .panel ul {
+    .hero-card ul {
       padding-left: 18px;
       color: var(--muted);
+      display: grid;
+      gap: 8px;
+    }
+
+    .ai-icons {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .ai-icon {
+      position: absolute;
+      width: 54px;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(10px);
+      animation: drift 8s ease-in-out infinite;
+      box-shadow: var(--shadow);
+    }
+    .ai-1 { left: 8%; top: 16%; animation-delay: 0s; }
+    .ai-2 { right: 8%; top: 24%; animation-delay: 1.5s; }
+    .ai-3 { left: 18%; bottom: 18%; animation-delay: 2.3s; }
+    .ai-4 { right: 18%; bottom: 12%; animation-delay: 3.2s; }
+
+    @keyframes drift {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-14px) rotate(3deg); }
     }
 
     section {
       padding: 70px 0;
+      position: relative;
     }
 
     .section-head {
@@ -175,28 +329,46 @@
       justify-content: space-between;
       align-items: center;
       gap: 12px;
-      margin-bottom: 18px;
+      margin-bottom: 22px;
       flex-wrap: wrap;
     }
+    .section-head h2 { font-size: 1.75rem; }
+    .section-head .sub { color: var(--muted); }
 
-    .section-head h2 {
-      font-size: 1.7rem;
-    }
-
-    .section-head .sub {
-      color: var(--muted);
+    .enroll-section {
+      padding-top: 0;
+      margin-top: -10px;
     }
 
     .enroll-card {
       display: grid;
       grid-template-columns: 0.9fr 1.1fr;
       gap: 20px;
-      background: rgba(17,24,39,0.95);
-      border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 22px;
       padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.32);
+      position: relative;
+      overflow: hidden;
     }
+
+    .enroll-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(120deg, rgba(56,189,248,0.30), transparent 30%, rgba(139,92,246,0.24));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .enroll-card h2 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 1.5rem;
+    }
+    .enroll-card p { color: var(--muted); }
 
     .contact-form {
       display: grid;
@@ -208,21 +380,29 @@
     .contact-form textarea {
       width: 100%;
       padding: 12px 14px;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid var(--border);
-      background: #0b1223;
-      color: #fff;
+      background: rgba(8, 15, 30, 0.9);
+      color: var(--text);
       outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .contact-form input:focus,
+    .contact-form select:focus,
+    .contact-form textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.16);
     }
 
     .contact-form textarea {
-      min-height: 110px;
+      min-height: 105px;
       resize: vertical;
     }
 
     .contact-form .btn {
       padding: 12px 14px;
-      border-radius: 10px;
+      border-radius: 12px;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
       color: white;
       font-weight: 700;
@@ -232,23 +412,23 @@
       min-height: 24px;
       color: var(--accent);
       margin-top: 4px;
+      font-size: 0.95rem;
     }
 
     .search-box {
       display: flex;
       gap: 10px;
-      margin-bottom: 16px;
       flex-wrap: wrap;
+      margin-bottom: 16px;
     }
-
     .search-box input {
       flex: 1;
       min-width: 220px;
       padding: 12px 14px;
       border: 1px solid var(--border);
-      border-radius: 10px;
-      background: #111827;
-      color: #fff;
+      border-radius: 12px;
+      background: rgba(12, 18, 32, 0.9);
+      color: var(--text);
       outline: none;
     }
 
@@ -256,18 +436,17 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
-
     .filter-btn {
       padding: 9px 13px;
       border-radius: 999px;
       border: 1px solid var(--border);
-      background: #111827;
-      color: #fff;
+      background: rgba(17, 24, 39, 0.85);
+      color: var(--text);
       cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
-
     .filter-btn.active {
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
       color: white;
@@ -281,48 +460,68 @@
     }
 
     .card {
-      background: #111827;
-      border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 20px;
       padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      transition: transform .2s ease, border-color .2s ease;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
     }
-
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(120deg, rgba(56,189,248,0.18), transparent 35%, rgba(139,92,246,0.2));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0.7;
+      transition: opacity 0.25s ease;
+    }
     .card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent);
+      transform: translateY(-6px) scale(1.01);
+      border-color: rgba(56, 189, 248, 0.42);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.34), 0 0 0 1px rgba(56,189,248,0.18);
     }
+    .card:hover::before { opacity: 1; }
 
     .tag {
       display: inline-block;
       margin-bottom: 8px;
       padding: 6px 10px;
       border-radius: 999px;
-      font-size: .8rem;
+      font-size: 0.8rem;
       background: rgba(56,189,248,0.12);
       color: var(--accent);
+      border: 1px solid rgba(56,189,248,0.18);
     }
 
     .card h3 {
       margin-bottom: 8px;
-      font-size: 1.06rem;
+      font-size: 1.08rem;
+      color: #fff;
     }
-
     .card p {
       color: var(--muted);
+      min-height: 48px;
       margin-bottom: 10px;
-      min-height: 46px;
     }
 
     .meta {
       color: #9fb3c8;
-      font-size: .95rem;
+      font-size: 0.95rem;
       margin-bottom: 10px;
     }
 
     .price {
-      font-size: 1.4rem;
+      font-size: 1.46rem;
       font-weight: 800;
       margin-bottom: 12px;
       color: #fff;
@@ -331,10 +530,11 @@
     .card .btn {
       width: 100%;
       padding: 10px 12px;
-      border-radius: 10px;
+      border-radius: 12px;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
       color: white;
       font-weight: 700;
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.22);
     }
 
     .empty {
@@ -347,19 +547,25 @@
       background: rgba(255,255,255,0.03);
     }
 
+    .why-section {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
     .points-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
       margin-top: 16px;
     }
-
     .point-item {
-      background: #111827;
+      background: rgba(17, 24, 39, 0.82);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 12px 14px;
       color: #dbeafe;
+      backdrop-filter: blur(8px);
     }
 
     .contact-grid {
@@ -370,11 +576,25 @@
     }
 
     .contact-box {
-      background: rgba(17,24,39,0.95);
-      border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 20px;
       padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .contact-box h2 {
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .contact-box p,
+    .contact-box div {
+      color: var(--muted);
+      line-height: 1.75;
     }
 
     .chat-button {
@@ -391,22 +611,25 @@
       justify-content: center;
       font-size: 28px;
       cursor: pointer;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      z-index: 950;
+      box-shadow: var(--shadow);
+      z-index: 970;
+      transition: transform 0.2s ease;
     }
+    .chat-button:hover { transform: translateY(-2px); }
 
     .chat-box {
       display: none;
       position: fixed;
       right: 20px;
-      bottom: 90px;
-      width: 330px;
-      background: #111827;
+      bottom: 92px;
+      width: min(360px, calc(100vw - 24px));
+      background: rgba(10, 16, 30, 0.96);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      z-index: 949;
+      box-shadow: var(--shadow);
+      z-index: 969;
+      backdrop-filter: blur(16px);
     }
 
     .chat-header {
@@ -421,35 +644,148 @@
 
     .chat-body {
       padding: 12px;
-      height: 260px;
-      overflow: auto;
-      background: #0b1223;
-      color: var(--muted);
-    }
-
-    .chat-body p { margin-bottom: 8px; }
-
-    .chat-input {
+      height: 300px;
+      overflow-y: auto;
+      background: linear-gradient(180deg, rgba(3,8,20,0.96), rgba(3,8,20,0.88));
       display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .message {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      animation: messageIn 0.32s ease both;
+    }
+    .message.user { justify-content: flex-end; }
+    .message.user .bubble { background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: white; }
+    .message.bot .bubble { background: rgba(255,255,255,0.08); color: var(--text); border: 1px solid var(--border); }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      font-size: 0.95rem;
+    }
+
+    .bubble {
+      max-width: 82%;
+      padding: 10px 12px;
+      border-radius: 14px 14px 14px 8px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.16);
+      white-space: pre-wrap;
+    }
+
+    .message.user .bubble {
+      border-radius: 14px 14px 8px 14px;
+    }
+
+    .timestamp {
+      font-size: 0.72rem;
+      color: #92a3b4;
+      margin-top: 4px;
+      text-align: right;
+    }
+
+    .typing {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border);
+      width: fit-content;
+      color: var(--muted);
+      animation: pulse 1.0s ease-in-out infinite;
+    }
+    .typing span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: inline-block;
+      animation: bounce 0.8s ease infinite;
+    }
+    .typing span:nth-child(2) { animation-delay: 0.15s; }
+    .typing span:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes bounce {
+      0%, 80%, 100% { transform: translateY(0); opacity: 0.8; }
+      40% { transform: translateY(-4px); opacity: 1; }
+    }
+
+    @keyframes messageIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .quick-replies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px 12px;
       border-top: 1px solid var(--border);
+      background: rgba(5,8,22,0.78);
+    }
+    .quick-btn {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 10px;
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .quick-btn:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
     }
 
-    .chat-input input {
+    .chat-input-wrap {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      padding: 10px;
+      border-top: 1px solid var(--border);
+      background: rgba(5,8,22,0.86);
+    }
+    .chat-input-wrap textarea {
       flex: 1;
-      border: none;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 9px 10px;
+      resize: none;
+      min-height: 42px;
+      max-height: 90px;
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
       outline: none;
-      padding: 12px;
-      background: #111827;
-      color: #fff;
+      font: inherit;
     }
-
-    .chat-input button {
+    .chat-input-wrap textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(56,189,248,0.15);
+    }
+    .send-btn {
       border: none;
-      padding: 12px 14px;
+      padding: 10px 12px;
+      border-radius: 12px;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
       color: white;
-      cursor: pointer;
       font-weight: 700;
+      cursor: pointer;
+      min-width: 48px;
     }
 
     .whatsapp {
@@ -461,7 +797,8 @@
       padding: 12px 16px;
       border-radius: 999px;
       font-weight: 700;
-      z-index: 950;
+      z-index: 970;
+      box-shadow: var(--shadow);
     }
 
     footer {
@@ -472,14 +809,37 @@
       background: #020617;
     }
 
+    .particle {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: particleFloat 9s linear infinite;
+      opacity: 0.7;
+      z-index: -1;
+    }
+
+    @keyframes particleFloat {
+      0% { transform: translate3d(0,0,0) scale(0.3); opacity: 0; }
+      10% { opacity: 0.7; }
+      100% { transform: translate3d(var(--dx), var(--dy), 0) scale(1); opacity: 0; }
+    }
+
     @media (max-width: 980px) {
       .hero-grid,
       .enroll-card,
-      .contact-grid { grid-template-columns: 1fr; }
-      .course-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+      .course-grid {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     @media (max-width: 700px) {
+      .menu-btn { display: inline-block; }
       .nav-links {
         display: none;
         position: absolute;
@@ -490,218 +850,266 @@
         align-items: flex-start;
         padding: 14px;
         border: 1px solid var(--border);
-        border-radius: 12px;
-        background: rgba(5,8,22,0.98);
+        border-radius: 14px;
+        background: rgba(5, 8, 22, 0.98);
       }
-
       .nav-links.show { display: flex; }
 
+      .hero { padding-top: 60px; }
       .course-grid { grid-template-columns: 1fr; }
       .points-grid { grid-template-columns: 1fr; }
-      .hero { padding-top: 60px; }
+      .stats { gap: 10px; }
+      .stat { min-width: 100%; }
+      .chat-button, .whatsapp { bottom: 16px; }
+      .chat-box { bottom: 78px; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="container nav">
-      <a href="#home" class="logo">🚀 IMAAD AI<span>CLASSES</span></a>
-      <div class="nav-links" id="navLinks">
-        <a href="#enroll">Enroll</a>
-        <a href="#courses">Courses</a>
-        <a href="#why">Why Us</a>
-        <a href="#contact">Contact</a>
-        <a href="#enroll" class="btn btn-primary">Enroll Now</a>
-      </div>
-    </div>
-  </header>
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
 
-  <section class="hero" id="home">
-    <div class="container hero-grid">
-      <div>
-        <h1>Learn AI, Web, Data & Business Skills</h1>
-        <p class="lead">
-          Join practical training with expert guidance. Our course prices start from <strong>₹5999</strong> and go up to <strong>₹10999</strong>.
-        </p>
-        <div class="hero-actions">
-          <a href="#courses" class="btn btn-primary">View Courses</a>
+  <div class="page-fade" id="page">
+    <header>
+      <div class="container nav">
+        <a href="#home" class="logo">
+          🚀 IMAAD AI
+          <span>CLASSES</span>
+        </a>
+
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+
+        <div class="nav-links" id="navLinks">
+          <a href="#enroll">Enroll</a>
+          <a href="#courses">Courses</a>
+          <a href="#why">Why Us</a>
+          <a href="#contact">Contact</a>
           <a href="#enroll" class="btn btn-primary">Enroll Now</a>
         </div>
-        <div class="stats">
-          <div class="stat"><strong>20+</strong> Courses</div>
-          <div class="stat"><strong>100%</strong> Practical</div>
-          <div class="stat"><strong>24/7</strong> Support</div>
-        </div>
       </div>
+    </header>
 
-      <div class="hero-card">
-        <h3>Why Choose Imaad AI Classes?</h3>
-        <ul>
-          <li>Beginner to advanced learning paths</li>
-          <li>Real projects and assignments</li>
-          <li>Live support and guidance</li>
-          <li>Flexible batch timing</li>
-          <li>Certificate on completion</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section id="enroll">
-    <div class="container">
-      <div class="enroll-card">
+    <section class="hero" id="home">
+      <div class="container hero-grid">
         <div>
-          <h2>Enroll Now</h2>
-          <p>Fill this form and we will contact you shortly with the best course for your goal.</p>
+          <div class="eyebrow">Premium AI Learning Platform</div>
+          <h1>Master <span class="gradient-text">AI</span>, Web, Data & Business Skills</h1>
+          <p class="lead">
+            Learn with practical projects, expert guidance, and a smart support assistant that helps you every step of the way.
+            Our course prices start from <strong>₹5999</strong> and go up to <strong>₹10999</strong>.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#courses" class="btn btn-primary">View Courses</a>
+            <a href="#enroll" class="btn btn-primary">Enroll Now</a>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><strong id="counter1">0</strong><span>Courses</span></div>
+            <div class="stat"><strong id="counter2">0</strong><span>Projects</span></div>
+            <div class="stat"><strong id="counter3">0</strong><span>Support</span></div>
+          </div>
+
+          <div class="result" id="resultText" style="margin-top: 14px; color: #dce7f4;">Browse our courses below.</div>
         </div>
 
-        <form class="contact-form" id="enrollForm">
-          <input type="text" id="enrollName" placeholder="Your Name" required />
-          <input type="email" id="enrollEmail" placeholder="Your Email" required />
-          <input type="text" id="enrollPhone" placeholder="Your Phone" />
-          <select id="enrollCourse">
-            <option value="Select a course">Select a course</option>
-            <option value="HTML & CSS Basics">HTML & CSS Basics</option>
-            <option value="JavaScript Essentials">JavaScript Essentials</option>
-            <option value="React Development">React Development</option>
-            <option value="Python for AI">Python for AI</option>
-            <option value="Machine Learning">Machine Learning</option>
-            <option value="Advanced AI & ML">Advanced AI & ML</option>
-            <option value="Data Science Bootcamp">Data Science Bootcamp</option>
-            <option value="AI Marketing">AI Marketing</option>
-          </select>
-          <textarea id="enrollMessage" placeholder="Tell us about your goal..."></textarea>
-          <button class="btn" type="submit">Send Enrollment Request</button>
-          <div class="status" id="enrollStatus"></div>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <section id="courses">
-    <div class="container">
-      <div class="section-head">
-        <h2>Popular Courses</h2>
-        <div class="sub">Search, filter, and enroll in the best course for you</div>
-      </div>
-
-      <div class="search-box">
-        <input id="searchInput" type="text" placeholder="Search courses..." />
-      </div>
-
-      <div class="filters">
-        <button class="filter-btn active" data-category="all">All</button>
-        <button class="filter-btn" data-category="web">Web</button>
-        <button class="filter-btn" data-category="ai">AI</button>
-        <button class="filter-btn" data-category="data">Data</button>
-        <button class="filter-btn" data-category="business">Business</button>
-      </div>
-
-      <div class="course-grid" id="courseGrid"></div>
-    </div>
-  </section>
-
-  <section id="why">
-    <div class="container">
-      <div class="section-head">
-        <h2>Why Choose Us?</h2>
-        <div class="sub">20 reasons students trust Imaad AI Classes</div>
-      </div>
-
-      <div class="points-grid">
-        <div class="point-item">1. Beginner-friendly learning environment</div>
-        <div class="point-item">2. Simple and clear explanations</div>
-        <div class="point-item">3. Practical projects in every course</div>
-        <div class="point-item">4. Real-world examples and case studies</div>
-        <div class="point-item">5. Flexible learning schedule</div>
-        <div class="point-item">6. Support for doubts and questions</div>
-        <div class="point-item">7. Career-focused training</div>
-        <div class="point-item">8. Updated course content</div>
-        <div class="point-item">9. Affordable pricing from ₹5999</div>
-        <div class="point-item">10. Advanced tracks up to ₹10999</div>
-        <div class="point-item">11. Hands-on assignments</div>
-        <div class="point-item">12. Learn from basics to advanced level</div>
-        <div class="point-item">13. Easy-to-follow lessons</div>
-        <div class="point-item">14. Industry-friendly tools and methods</div>
-        <div class="point-item">15. Certification on completion</div>
-        <div class="point-item">16. Good for students and professionals</div>
-        <div class="point-item">17. Personalized guidance</div>
-        <div class="point-item">18. Build skills for future jobs</div>
-        <div class="point-item">19. Fast and friendly support</div>
-        <div class="point-item">20. Trusted by learners who want real results</div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="container contact-grid">
-      <div class="contact-box">
-        <h2>Contact Us</h2>
-        <p style="color: var(--muted); margin-top: 8px;">Want to know more? Fill the form and we will contact you soon.</p>
-        <div style="margin-top: 16px; color: var(--muted);">
-          <div>📧 Email: abida28125@gmail.com</div>
-          <div>📱 WhatsApp: +91 9596191037</div>
-          <div>📍 Online classes available</div>
+        <div class="hero-card">
+          <h3>Why Choose Imaad AI Classes?</h3>
+          <ul>
+            <li>Beginner to advanced learning paths</li>
+            <li>Real projects and assignments</li>
+            <li>Live support and guidance</li>
+            <li>Flexible batch timing</li>
+            <li>Certificate on completion</li>
+          </ul>
         </div>
       </div>
 
-      <div class="contact-box">
-        <form class="contact-form" id="contactForm">
-          <input type="text" id="contactName" placeholder="Your Name" required />
-          <input type="email" id="contactEmail" placeholder="Your Email" required />
-          <input type="text" id="contactPhone" placeholder="Your Phone" />
-          <textarea id="contactMessage" placeholder="Write your query here..."></textarea>
-          <button class="btn" type="submit">Send Message</button>
-          <div class="status" id="contactStatus"></div>
-        </form>
+      <div class="ai-icons" aria-hidden="true">
+        <div class="ai-icon ai-1">🤖</div>
+        <div class="ai-icon ai-2">⚡</div>
+        <div class="ai-icon ai-3">🧠</div>
+        <div class="ai-icon ai-4">✨</div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <div class="chat-button" id="chatToggle">🤖</div>
+    <section class="enroll-section" id="enroll">
+      <div class="container">
+        <div class="enroll-card">
+          <div>
+            <h2>Enroll Now</h2>
+            <p>Fill out the form and we will contact you shortly with the best course for your goal.</p>
+          </div>
+
+          <form class="contact-form" id="enrollForm">
+            <input type="text" id="enrollName" placeholder="Your Name" required />
+            <input type="email" id="enrollEmail" placeholder="Your Email" required />
+            <input type="text" id="enrollPhone" placeholder="Your Phone" />
+            <select id="enrollCourse">
+              <option value="Select a course">Select a course</option>
+              <option value="HTML & CSS Basics">HTML & CSS Basics</option>
+              <option value="JavaScript Essentials">JavaScript Essentials</option>
+              <option value="React Development">React Development</option>
+              <option value="Python for AI">Python for AI</option>
+              <option value="Machine Learning">Machine Learning</option>
+              <option value="Advanced AI & ML">Advanced AI & ML</option>
+              <option value="Data Science Bootcamp">Data Science Bootcamp</option>
+              <option value="AI Marketing">AI Marketing</option>
+            </select>
+            <textarea id="enrollMessage" placeholder="Tell us about your goal..."></textarea>
+            <button class="btn" type="submit">Send Enrollment Request</button>
+            <div class="status" id="enrollStatus"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="courses">
+      <div class="container">
+        <div class="section-head">
+          <h2>Professional Courses</h2>
+          <div class="sub">Search, filter, and enroll in the perfect course</div>
+        </div>
+
+        <div class="search-box">
+          <input id="searchInput" type="text" placeholder="Search courses..." />
+        </div>
+
+        <div class="filters">
+          <button class="filter-btn active" data-category="all">All</button>
+          <button class="filter-btn" data-category="web">Web</button>
+          <button class="filter-btn" data-category="ai">AI</button>
+          <button class="filter-btn" data-category="data">Data</button>
+          <button class="filter-btn" data-category="business">Business</button>
+        </div>
+
+        <div class="course-grid" id="courseGrid"></div>
+      </div>
+    </section>
+
+    <section class="why-section" id="why">
+      <div class="container">
+        <div class="section-head">
+          <h2>Why Choose Us?</h2>
+          <div class="sub">20 reasons students trust Imaad AI Classes</div>
+        </div>
+
+        <div class="points-grid">
+          <div class="point-item">1. Beginner-friendly learning environment</div>
+          <div class="point-item">2. Simple and clear explanations</div>
+          <div class="point-item">3. Practical projects in every course</div>
+          <div class="point-item">4. Real-world examples and case studies</div>
+          <div class="point-item">5. Flexible learning schedule</div>
+          <div class="point-item">6. Support for doubts and questions</div>
+          <div class="point-item">7. Career-focused training</div>
+          <div class="point-item">8. Updated course content</div>
+          <div class="point-item">9. Affordable pricing from ₹5999</div>
+          <div class="point-item">10. Advanced tracks up to ₹10999</div>
+          <div class="point-item">11. Hands-on assignments</div>
+          <div class="point-item">12. Learn from basics to advanced level</div>
+          <div class="point-item">13. Easy-to-follow lessons</div>
+          <div class="point-item">14. Industry-friendly tools and methods</div>
+          <div class="point-item">15. Certification on completion</div>
+          <div class="point-item">16. Good for students and professionals</div>
+          <div class="point-item">17. Personalized guidance</div>
+          <div class="point-item">18. Build skills for future jobs</div>
+          <div class="point-item">19. Fast and friendly support</div>
+          <div class="point-item">20. Trusted by learners who want real results</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container contact-grid">
+        <div class="contact-box">
+          <h2>Contact Us</h2>
+          <p>Want to know more? Fill the form and we will contact you soon.</p>
+          <div style="margin-top: 12px;">
+            <div>📧 Email: abida28125@gmail.com</div>
+            <div>📱 WhatsApp: +91 9596191037</div>
+            <div>📍 Online classes available</div>
+          </div>
+        </div>
+
+        <div class="contact-box">
+          <form class="contact-form" id="contactForm">
+            <input type="text" id="contactName" placeholder="Your Name" required />
+            <input type="email" id="contactEmail" placeholder="Your Email" required />
+            <input type="text" id="contactPhone" placeholder="Your Phone" />
+            <textarea id="contactMessage" placeholder="Write your query here..."></textarea>
+            <button class="btn" type="submit">Send Message</button>
+            <div class="status" id="contactStatus"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="chat-button" id="chatToggle" aria-label="Open chat assistant">🤖</div>
 
   <div class="chat-box" id="chatBox">
     <div class="chat-header">
-      <span>Imaad AI Tutor</span>
+      <span>✨ Imaad AI Assistant</span>
       <span id="closeChat" style="cursor:pointer;">✖</span>
     </div>
+
     <div class="chat-body" id="chatBody">
-      <p><b>AI Tutor:</b> Hello! Ask me about courses, pricing, or enrollment.</p>
+      <div class="message bot">
+        <div class="avatar">🤖</div>
+        <div>
+          <div class="bubble">
+            Hi! I’m your AI learning assistant. I can help with course details, pricing, enrollment, and study guidance.
+          </div>
+          <div class="timestamp" id="time0"></div>
+        </div>
+      </div>
     </div>
-    <div class="chat-input">
-      <input id="chatInput" type="text" placeholder="Ask something..." />
-      <button id="sendChat">Send</button>
+
+    <div class="quick-replies">
+      <button class="quick-btn" data-text="Show me the courses">Courses</button>
+      <button class="quick-btn" data-text="What is the price?">Prices</button>
+      <button class="quick-btn" data-text="Enroll now">Enroll</button>
+      <button class="quick-btn" data-text="I want Python">Python</button>
+    </div>
+
+    <div class="chat-input-wrap">
+      <textarea id="chatInput" placeholder="Ask me anything..."></textarea>
+      <button class="send-btn" id="sendChat">➤</button>
     </div>
   </div>
 
   <a class="whatsapp" href="https://wa.me/9596191037">WhatsApp Us</a>
 
-  <footer>© 2026 Imaad AI Classes. All rights reserved.</footer>
+  <footer>
+    © 2026 Imaad AI Classes. All rights reserved.
+  </footer>
 
   <script>
     const courses = [
       { title: "HTML & CSS Basics", category: "web", price: 5999, duration: "2 Weeks", desc: "Build clean and responsive websites from scratch.", badge: "Beginner" },
-      { title: "JavaScript Essentials", category: "web", price: 6999, duration: "3 Weeks", desc: "Learn DOM, logic, and interactive web pages.", badge: "Popular" },
-      { title: "React Development", category: "web", price: 7999, duration: "4 Weeks", desc: "Create modern UI applications with React.", badge: "Advanced" },
-      { title: "Full Stack Web Course", category: "web", price: 8999, duration: "6 Weeks", desc: "Frontend + backend + deployment in one program.", badge: "Pro" },
-      { title: "Python for AI", category: "ai", price: 9499, duration: "5 Weeks", desc: "Get started with Python for machine learning and AI.", badge: "Beginner" },
-      { title: "Machine Learning", category: "ai", price: 9999, duration: "6 Weeks", desc: "Learn models, training, and evaluation.", badge: "Popular" },
-      { title: "Advanced AI & ML", category: "ai", price: 10999, duration: "8 Weeks", desc: "Build advanced AI models and deployment workflows.", badge: "Expert" },
-      { title: "Generative AI", category: "ai", price: 10499, duration: "6 Weeks", desc: "Create content, prompts, and automations using AI tools.", badge: "Trending" },
-      { title: "Data Science Bootcamp", category: "data", price: 9999, duration: "6 Weeks", desc: "Work with Python, analytics, and dashboards.", badge: "Popular" },
-      { title: "Power BI & Analytics", category: "data", price: 8999, duration: "5 Weeks", desc: "Turn raw data into business insights.", badge: "Practical" },
-      { title: "Cloud & DevOps Basics", category: "data", price: 10999, duration: "5 Weeks", desc: "Learn deployment, CI/CD, and cloud basics.", badge: "Advanced" },
+      { title: "JavaScript Essentials", category: "web", price: 6999, duration: "3 Weeks", desc: "Learn logic, DOM, and interactive web pages.", badge: "Popular" },
+      { title: "React Development", category: "web", price: 7999, duration: "4 Weeks", desc: "Create modern UI apps with React.", badge: "Advanced" },
+      { title: "Full Stack Web Course", category: "web", price: 8999, duration: "6 Weeks", desc: "Frontend + backend + deployment included.", badge: "Pro" },
+      { title: "Python for AI", category: "ai", price: 9499, duration: "5 Weeks", desc: "Start your AI journey with Python basics.", badge: "Beginner" },
+      { title: "Machine Learning", category: "ai", price: 9999, duration: "6 Weeks", desc: "Learn models, data prep, and evaluation.", badge: "Popular" },
+      { title: "Advanced AI & ML", category: "ai", price: 10999, duration: "8 Weeks", desc: "Build advanced models and deployment workflows.", badge: "Expert" },
+      { title: "Generative AI", category: "ai", price: 10499, duration: "6 Weeks", desc: "Create content and automation with modern AI tools.", badge: "Trending" },
+      { title: "Data Science Bootcamp", category: "data", price: 9999, duration: "6 Weeks", desc: "Learn analysis, Python, and dashboards.", badge: "Popular" },
+      { title: "Power BI & Analytics", category: "data", price: 8999, duration: "5 Weeks", desc: "Turn data into business insights.", badge: "Practical" },
+      { title: "Cloud & DevOps Basics", category: "data", price: 10999, duration: "5 Weeks", desc: "Understand deployment, CI/CD, and cloud basics.", badge: "Advanced" },
       { title: "AI Marketing", category: "business", price: 7499, duration: "4 Weeks", desc: "Use AI tools for campaigns and digital growth.", badge: "Business" },
-      { title: "AI Business Tools", category: "business", price: 7999, duration: "4 Weeks", desc: "Automate office work with smart AI business workflows.", badge: "Business" },
-      { title: "Prompt Engineering", category: "business", price: 6499, duration: "3 Weeks", desc: "Master prompts for better results from AI tools.", badge: "Practical" },
-      { title: "AI Content Creation", category: "business", price: 6999, duration: "3 Weeks", desc: "Create media content using AI tools quickly.", badge: "Creative" }
+      { title: "AI Business Tools", category: "business", price: 7999, duration: "4 Weeks", desc: "Automate work with smart AI business workflows.", badge: "Business" },
+      { title: "Prompt Engineering", category: "business", price: 6499, duration: "3 Weeks", desc: "Master prompts for better AI outputs.", badge: "Practical" },
+      { title: "AI Content Creation", category: "business", price: 6999, duration: "3 Weeks", desc: "Create blogs, videos, and social content with AI.", badge: "Creative" }
     ];
 
-    const state = { category: "all", search: "" };
+    const state = { category: "all", search: "", selectedCourse: null };
     const courseGrid = document.getElementById("courseGrid");
+    const resultText = document.getElementById("resultText");
     const searchInput = document.getElementById("searchInput");
-    const enrollStatus = document.getElementById("enrollStatus");
-    const contactStatus = document.getElementById("contactStatus");
 
     function renderCourses() {
       const filtered = courses.filter(course => {
@@ -711,8 +1119,9 @@
         return matchCategory && matchSearch;
       });
 
-      if (!filtered.length) {
-        courseGrid.innerHTML = `<div class="empty">No course found. Try another keyword or filter.</div>`;
+      if (filtered.length === 0) {
+        courseGrid.innerHTML = `<div class="empty">No course found. Try another keyword.</div>`;
+        resultText.textContent = "No matching courses found.";
         return;
       }
 
@@ -723,9 +1132,11 @@
           <p>${course.desc}</p>
           <div class="meta">Duration: ${course.duration}</div>
           <div class="price">₹${course.price}</div>
-          <button class="btn enroll-btn">Enroll Now</button>
+          <button class="btn enroll-btn" data-course="${course.title}">Enroll Now</button>
         </div>
       `).join("");
+
+      resultText.textContent = `Showing ${filtered.length} course(s) from ₹5999 to ₹10999.`;
     }
 
     document.querySelectorAll(".filter-btn").forEach(btn => {
@@ -744,119 +1155,512 @@
 
     courseGrid.addEventListener("click", (e) => {
       if (e.target.classList.contains("enroll-btn")) {
-        const card = e.target.closest(".card");
-        const title = card.querySelector("h3").textContent;
-        const price = card.querySelector(".price").textContent;
-        enrollStatus.textContent = `You selected ${title} for ${price}.`;
+        const title = e.target.dataset.course;
+        openEnrollmentForm(title);
       }
     });
 
-    document.getElementById("enrollForm").addEventListener("submit", (e) => {
+    function openEnrollmentForm(courseTitle) {
+      document.getElementById("enroll").scrollIntoView({ behavior: "smooth", block: "start" });
+      const select = document.getElementById("enrollCourse");
+      if (courseTitle && Array.from(select.options).some(o => o.value === courseTitle)) {
+        select.value = courseTitle;
+      }
+      document.getElementById("enrollName").focus();
+    }
+
+    const FORM_PROVIDER = "emailjs"; // "emailjs" | "firebase" | "supabase" | "php" | "node"
+    const FORM_CONFIG = {
+      emailjs: {
+        publicKey: "YOUR_EMAILJS_PUBLIC_KEY",
+        serviceId: "YOUR_EMAILJS_SERVICE_ID",
+        templateId: "YOUR_EMAILJS_TEMPLATE_ID"
+      },
+      firebase: {
+        url: "https://YOUR-FIREBASE-PROJECT.firebaseio.com/submissions.json"
+      },
+      supabase: {
+        url: "https://YOUR-SUPABASE-PROJECT.supabase.co/rest/v1/submissions",
+        anonKey: "YOUR_SUPABASE_ANON_KEY"
+      },
+      php: {
+        url: "/php/submit.php"
+      },
+      node: {
+        url: "/api/submit-form"
+      }
+    };
+
+    async function submitFormData(kind, payload) {
+      const provider = FORM_PROVIDER;
+      const config = FORM_CONFIG[provider];
+
+      if (!config) throw new Error("Invalid form provider");
+
+      if (provider === "emailjs") {
+        if (!window.emailjs) throw new Error("EmailJS not loaded");
+        if (config.publicKey.includes("YOUR") || config.serviceId.includes("YOUR") || config.templateId.includes("YOUR")) {
+          throw new Error("EmailJS credentials not configured");
+        }
+        if (!window.emailjs.init) {
+          throw new Error("EmailJS init not available");
+        }
+        window.emailjs.init(config.publicKey);
+
+        const templateParams = {
+          subject: kind === "enrollment" ? "Enrollment Request - Imaad AI Classes" : "Contact Request - Imaad AI Classes",
+          name: payload.name,
+          email: payload.email,
+          phone: payload.phone || "N/A",
+          course: payload.course || "N/A",
+          message: payload.message || "N/A",
+          type: kind
+        };
+
+        const result = await window.emailjs.send(config.serviceId, config.templateId, templateParams);
+        if (!result || result.status !== 200) throw new Error("EmailJS send failed");
+        return result;
+      }
+
+      if (provider === "firebase") {
+        const res = await fetch(config.url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ kind, ...payload, createdAt: new Date().toISOString() })
+        });
+        if (!res.ok) throw new Error("Firebase submission failed");
+        return res.json();
+      }
+
+      if (provider === "supabase") {
+        const res = await fetch(config.url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": config.anonKey,
+            "Authorization": `Bearer ${config.anonKey}`,
+            "Prefer": "return=representation"
+          },
+          body: JSON.stringify([{ kind, ...payload, created_at: new Date().toISOString() }])
+        });
+        if (!res.ok) throw new Error("Supabase submission failed");
+        return res.json();
+      }
+
+      if (provider === "php") {
+        const res = await fetch(config.url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ kind, ...payload })
+        });
+        if (!res.ok) throw new Error("PHP backend submission failed");
+        return res.json();
+      }
+
+      if (provider === "node") {
+        const res = await fetch(config.url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ kind, ...payload })
+        });
+        if (!res.ok) throw new Error("Node backend submission failed");
+        return res.json();
+      }
+
+      throw new Error("No form provider selected");
+    }
+
+    document.getElementById("enrollForm").addEventListener("submit", async function (e) {
       e.preventDefault();
       const name = document.getElementById("enrollName").value.trim();
       const email = document.getElementById("enrollEmail").value.trim();
+      const status = document.getElementById("enrollStatus");
+
       if (!name || !email) {
-        enrollStatus.textContent = "Please enter your name and email.";
+        status.textContent = "Please enter your name and email.";
         return;
       }
 
-      const course = document.getElementById("enrollCourse").value;
-      const message = document.getElementById("enrollMessage").value.trim();
-      const body = encodeURIComponent(
-        `Name: ${name}\nEmail: ${email}\nPhone: ${document.getElementById("enrollPhone").value.trim()}\nCourse: ${course}\nMessage: ${message}`
-      );
-      window.location.href = `mailto:abida28125@gmail.com?subject=${encodeURIComponent("Enrollment Request - Imaad AI Classes")}&body=${body}`;
-      enrollStatus.textContent = "Opening your email app...";
-      e.target.reset();
+      try {
+        await submitFormData("enrollment", {
+          name,
+          email,
+          phone: document.getElementById("enrollPhone").value.trim(),
+          course: document.getElementById("enrollCourse").value,
+          message: document.getElementById("enrollMessage").value.trim()
+        });
+
+        status.textContent = "Thanks! Your enrollment request was submitted successfully.";
+        e.target.reset();
+      } catch (err) {
+        console.error(err);
+        status.textContent = "Submission failed. Please contact us directly.";
+      }
     });
 
-    document.getElementById("contactForm").addEventListener("submit", (e) => {
+    document.getElementById("contactForm").addEventListener("submit", async function (e) {
       e.preventDefault();
       const name = document.getElementById("contactName").value.trim();
       const email = document.getElementById("contactEmail").value.trim();
+      const status = document.getElementById("contactStatus");
+
       if (!name || !email) {
-        contactStatus.textContent = "Please enter your name and email.";
+        status.textContent = "Please enter your name and email.";
         return;
       }
 
-      const message = document.getElementById("contactMessage").value.trim();
-      const body = encodeURIComponent(
-        `Name: ${name}\nEmail: ${email}\nPhone: ${document.getElementById("contactPhone").value.trim()}\nMessage: ${message}`
-      );
-      window.location.href = `mailto:abida28125@gmail.com?subject=${encodeURIComponent("Contact Request - Imaad AI Classes")}&body=${body}`;
-      contactStatus.textContent = "Opening your email app...";
-      e.target.reset();
+      try {
+        await submitFormData("contact", {
+          name,
+          email,
+          phone: document.getElementById("contactPhone").value.trim(),
+          message: document.getElementById("contactMessage").value.trim()
+        });
+
+        status.textContent = "Thanks! Your message was submitted successfully.";
+        e.target.reset();
+      } catch (err) {
+        console.error(err);
+        status.textContent = "Submission failed. Please contact us directly.";
+      }
     });
 
-    document.getElementById("navLinks").classList.remove("show"); // no-op just keeps script clean
+    document.getElementById("menuBtn").addEventListener("click", () => {
+      document.getElementById("navLinks").classList.toggle("show");
+    });
+
+    function animateCounters() {
+      const targets = [
+        { el: document.getElementById("counter1"), value: 20 },
+        { el: document.getElementById("counter2"), value: 100 },
+        { el: document.getElementById("counter3"), value: 24 }
+      ];
+
+      targets.forEach(item => {
+        let current = 0;
+        const step = item.value === 100 ? 2 : 1;
+        const interval = setInterval(() => {
+          current += step;
+          if (current >= item.value) {
+            current = item.value;
+            clearInterval(interval);
+          }
+          item.el.textContent = `${current}${item.value === 24 ? "/7" : item.value === 100 ? "%" : "+"}`;
+        }, 30);
+      });
+    }
+
+    function createParticles() {
+      const count = 24;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement("div");
+        p.className = "particle";
+        const size = 3 + Math.random() * 3;
+        p.style.width = `${size}px`;
+        p.style.height = `${size}px`;
+        p.style.left = `${Math.random() * 100}vw`;
+        p.style.top = `${Math.random() * 100}vh`;
+        p.style.setProperty("--dx", `${(Math.random() - 0.5) * 250}px`);
+        p.style.setProperty("--dy", `${-300 - Math.random() * 220}px`);
+        p.style.animationDuration = `${8 + Math.random() * 5}s`;
+        p.style.animationDelay = `${Math.random() * 4}s`;
+        document.body.appendChild(p);
+      }
+    }
 
     const chatToggle = document.getElementById("chatToggle");
     const chatBox = document.getElementById("chatBox");
     const closeChat = document.getElementById("closeChat");
-    const sendChat = document.getElementById("sendChat");
-    const chatInput = document.getElementById("chatInput");
     const chatBody = document.getElementById("chatBody");
+    const chatInput = document.getElementById("chatInput");
+    const sendChat = document.getElementById("sendChat");
 
-    function addMessage(sender, text) {
-      const p = document.createElement("p");
-      p.innerHTML = `<b>${sender}:</b> ${text}`;
-      chatBody.appendChild(p);
+    function addTimestamp() {
+      const now = new Date();
+      return now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+    }
+
+    function addMessage(text, sender = "bot") {
+      const type = sender === "user" ? "user" : "bot";
+      const wrap = document.createElement("div");
+      wrap.className = `message ${type}`;
+
+      const bubbleWrapper = document.createElement("div");
+
+      const bubble = document.createElement("div");
+      bubble.className = "bubble";
+      bubble.innerHTML = text;
+
+      const stamp = document.createElement("div");
+      stamp.className = "timestamp";
+      stamp.textContent = addTimestamp();
+
+      bubbleWrapper.appendChild(bubble);
+      bubbleWrapper.appendChild(stamp);
+
+      if (type === "bot") {
+        const avatar = document.createElement("div");
+        avatar.className = "avatar";
+        avatar.textContent = "🤖";
+        wrap.appendChild(avatar);
+      }
+
+      wrap.appendChild(bubbleWrapper);
+      chatBody.appendChild(wrap);
       chatBody.scrollTop = chatBody.scrollHeight;
     }
 
-    function replyToChat(message) {
-      const msg = message.toLowerCase();
+    function addTypingIndicator() {
+      const wrap = document.createElement("div");
+      wrap.className = "message bot";
+      wrap.innerHTML = `
+        <div class="avatar">🤖</div>
+        <div class="typing">
+          <span></span><span></span><span></span>
+        </div>
+      `;
+      chatBody.appendChild(wrap);
+      chatBody.scrollTop = chatBody.scrollHeight;
+      return wrap;
+    }
 
-      if (msg.includes("hello") || msg.includes("hi")) {
-        return "Hello! I’m Imaad AI Tutor. I can help with courses, pricing, and enrollment.";
+    function removeTypingIndicator(el) {
+      if (el && el.parentNode) el.parentNode.removeChild(el);
+    }
+
+    function levenshteinDistance(a, b) {
+      const dp = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
+      for (let i = 0; i <= a.length; i++) dp[i][0] = i;
+      for (let j = 0; j <= b.length; j++) dp[0][j] = j;
+      for (let i = 1; i <= a.length; i++) {
+        for (let j = 1; j <= b.length; j++) {
+          const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+          dp[i][j] = Math.min(
+            dp[i - 1][j] + 1,
+            dp[i][j - 1] + 1,
+            dp[i - 1][j - 1] + cost
+          );
+        }
       }
-      if (msg.includes("price") || msg.includes("cost")) {
-        return "Our courses start from ₹5999 and go up to ₹10999 depending on the course.";
+      return dp[a.length][b.length];
+    }
+
+    function normalizeText(text) {
+      return text
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function correctText(text) {
+      const raw = normalizeText(text);
+      const replacements = {
+        enrool: "enroll",
+        enrol: "enroll",
+        enroll: "enroll",
+        admsion: "admission",
+        admision: "admission",
+        regster: "register",
+        registor: "register",
+        pythin: "python",
+        machin: "machine",
+        learnng: "learning",
+        javscript: "javascript",
+        js: "javascript",
+        reactjs: "react",
+        corse: "course",
+        jion: "join",
+        admision: "admission",
+        take: "take"
+      };
+
+      const words = raw.split(" ").map(word => replacements[word] || word);
+      let corrected = words.join(" ");
+
+      corrected = corrected.replace(/\bmachine learnng\b/g, "machine learning");
+      corrected = corrected.replace(/\bjoin now\b/g, "join now");
+
+      const known = ["enroll", "admission", "register", "join", "python", "react", "javascript", "html", "css", "machine", "learning", "data", "science", "course", "price", "cost", "form", "study", "now"];
+      const correctedWords = corrected.split(" ").map(word => {
+        let best = word;
+        let bestDistance = Infinity;
+        known.forEach(k => {
+          const dist = levenshteinDistance(word, k);
+          if (dist < bestDistance && dist <= 2) {
+            bestDistance = dist;
+            best = k;
+          }
+        });
+        return best;
+      });
+
+      corrected = correctedWords.join(" ");
+      corrected = corrected.charAt(0).toUpperCase() + corrected.slice(1);
+      if (!/[?.!]$/.test(corrected)) corrected += ".";
+      return corrected;
+    }
+
+    function findCourseByQuery(text) {
+      const q = correctText(text).toLowerCase();
+
+      if (q.includes("python")) return courses.find(c => c.title.toLowerCase().includes("python")) || null;
+      if (q.includes("react")) return courses.find(c => c.title.toLowerCase().includes("react")) || null;
+      if (q.includes("javascript")) return courses.find(c => c.title.toLowerCase().includes("javascript")) || null;
+      if (q.includes("html") || q.includes("css")) return courses.find(c => c.title.toLowerCase().includes("html")) || null;
+      if (q.includes("machine learning")) return courses.find(c => c.title.toLowerCase().includes("machine learning")) || null;
+      if (q.includes("data science")) return courses.find(c => c.title.toLowerCase().includes("data science")) || null;
+      if (q.includes("generative")) return courses.find(c => c.title.toLowerCase().includes("generative")) || null;
+      if (q.includes("power bi")) return courses.find(c => c.title.toLowerCase().includes("power bi")) || null;
+      if (q.includes("prompt")) return courses.find(c => c.title.toLowerCase().includes("prompt")) || null;
+      if (q.includes("marketing")) return courses.find(c => c.title.toLowerCase().includes("marketing")) || null;
+      if (q.includes("business tools")) return courses.find(c => c.title.toLowerCase().includes("business tools")) || null;
+      if (q.includes("content")) return courses.find(c => c.title.toLowerCase().includes("content")) || null;
+      if (q.includes("cloud")) return courses.find(c => c.title.toLowerCase().includes("cloud")) || null;
+      return null;
+    }
+
+    function detectIntent(text) {
+      const corrected = correctText(text).toLowerCase();
+      const enrollRegex = /\b(enroll|enrol|enrool|admission|register|register me|join|join course|take admission|i want to study|i want this course|sign me up|book seat|reserve my seat)\b/;
+      const priceRegex = /\b(price|cost|fee|how much)\b/;
+      const courseRegex = /\b(python|react|html|css|javascript|machine learning|data science|generative ai|power bi|prompt engineering|ai marketing|cloud|devops|content creation|course)\b/;
+
+      if (enrollRegex.test(corrected)) return "enroll";
+      if (priceRegex.test(corrected)) return "price";
+      if (courseRegex.test(corrected)) return "course";
+      return "general";
+    }
+
+    const conversationMemory = [];
+
+    function buildSystemPrompt() {
+      return `
+You are ChatGPT-style AI assistant for Imaad AI Classes.
+Help visitors with courses, pricing, enrollment, contact details, and study guidance.
+Be friendly, professional, human-like, concise, and supportive.
+If the user asks to enroll, guide them to the form and open it.
+If the user mentions a course, remember it and use it in follow-up replies.
+Use the current selected course if available.
+If the user has spelling mistakes, politely correct them and continue.
+`;
+    }
+
+    async function getAIReply(rawText) {
+      const corrected = correctText(rawText);
+      const intent = detectIntent(rawText);
+      const lower = corrected.toLowerCase();
+      const foundCourse = findCourseByQuery(rawText);
+
+      if (foundCourse) {
+        state.selectedCourse = foundCourse;
       }
-      if (msg.includes("course")) {
-        return "We offer web, AI, data, and business courses. You can choose from HTML, JavaScript, React, Python for AI, Machine Learning, Data Science, and more.";
+
+      conversationMemory.push({ role: "user", content: rawText });
+      const memoryContext = conversationMemory.slice(-6).map(m => `${m.role}: ${m.content}`).join("\n");
+
+      const systemPrompt = buildSystemPrompt();
+      const contextText = `System: ${systemPrompt}\nConversation:\n${memoryContext}\nUser: ${corrected}`;
+
+      // Real ChatGPT integration can be added here through your own backend/proxy.
+      // For now this keeps the website fully functional with a premium AI-style response.
+      if (intent === "enroll") {
+        openEnrollmentForm(state.selectedCourse ? state.selectedCourse.title : "");
+        return `Great! I’ve opened the enrollment form for you below. Fill in your details and we’ll contact you shortly.`;
       }
-      if (msg.includes("enroll") || msg.includes("join")) {
-        return "You can enroll by using the Enroll Now form on this page.";
+
+      if (intent === "price") {
+        if (state.selectedCourse) {
+          return `${state.selectedCourse.title} costs ₹${state.selectedCourse.price}. It is a great choice if you want practical learning.`;
+        }
+        return "Our courses start from ₹5999 and go up to ₹10999 depending on the course and level.";
       }
-      if (msg.includes("contact") || msg.includes("email")) {
-        return "You can contact us at abida28125@gmail.com or WhatsApp +91 9596191037.";
+
+      if (intent === "course" && foundCourse) {
+        state.selectedCourse = foundCourse;
+        return `${foundCourse.title} is an excellent choice. It is designed to help you build practical skills quickly. Would you like to enroll or see the price?`;
       }
-      if (msg.includes("whatsapp")) {
-        return "You can contact us on WhatsApp: +91 9596191037.";
+
+      if (lower.includes("hello") || lower.includes("hi")) {
+        return "Hello! I’m Imaad AI Assistant. I can help with courses, pricing, enrollment, and study guidance.";
       }
-      if (msg.includes("ai")) {
-        return "We teach AI, Machine Learning, Generative AI, Prompt Engineering, and more.";
+
+      if (lower.includes("show me the courses") || lower.includes("courses")) {
+        document.getElementById("courses").scrollIntoView({ behavior: "smooth", block: "start" });
+        return "Absolutely — I’ve brought the course catalog into view for you. Pick a course and I’ll help you enroll.";
       }
-      return "Thanks for your message! I can help with courses, pricing, enrollment, or contact details.";
+
+      if (lower.includes("contact") || lower.includes("email")) {
+        return "You can reach us at abida28125@gmail.com or WhatsApp us at +91 9596191037.";
+      }
+
+      if (lower.includes("thanks") || lower.includes("thank you")) {
+        return "You’re very welcome! I’m happy to help.";
+      }
+
+      return "Absolutely! I’d be happy to help you with the right course, pricing, or enrollment steps. If you want, I can also recommend a course based on your goal.";
+    }
+
+    async function sendMessage() {
+      const raw = chatInput.value.trim();
+      if (!raw) return;
+
+      addMessage(raw.replace(/\n/g, "<br>"), "user");
+
+      const typing = addTypingIndicator();
+
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      removeTypingIndicator(typing);
+
+      const corrected = correctText(raw);
+      let responseText = await getAIReply(raw);
+
+      if (corrected.toLowerCase() !== raw.toLowerCase()) {
+        responseText = `I understood your request as: "${corrected}"<br><br>${responseText}`;
+      }
+
+      addMessage(responseText, "bot");
+      chatInput.value = "";
+      chatBody.scrollTop = chatBody.scrollHeight;
     }
 
     chatToggle.addEventListener("click", () => {
       chatBox.style.display = chatBox.style.display === "block" ? "none" : "block";
+      if (chatBox.style.display === "block") {
+        chatInput.focus();
+      }
     });
 
     closeChat.addEventListener("click", () => {
       chatBox.style.display = "none";
     });
 
-    function sendMessage() {
-      const msg = chatInput.value.trim();
-      if (!msg) return;
-
-      addMessage("You", msg);
-      addMessage("Imaad AI", replyToChat(msg));
-      chatInput.value = "";
-    }
-
     sendChat.addEventListener("click", sendMessage);
 
     chatInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
         sendMessage();
       }
     });
 
-    renderCourses();
+    document.querySelectorAll(".quick-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        chatInput.value = btn.dataset.text;
+        sendMessage();
+      });
+    });
+
+    window.addEventListener("load", () => {
+      renderCourses();
+      animateCounters();
+      createParticles();
+      document.getElementById("time0").textContent = addTimestamp();
+      setTimeout(() => {
+        document.getElementById("page").classList.add("is-visible");
+      }, 80);
+    });
   </script>
 </body>
 </html>
